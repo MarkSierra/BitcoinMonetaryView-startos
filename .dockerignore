@@ -1,0 +1,7 @@
+node_modules
+javascript
+*.s9pk
+.git
+upstream/.git
+upstream/tests
+upstream/docs
