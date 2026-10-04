@@ -87,7 +87,8 @@ databases, several GB). After a restore the app rescans.
 
 ## Limitations and Differences
 
-- No app-level login (the UI shows public chain statistics only and cannot act on the node).
+- No app-level login (the UI shows public chain statistics only and cannot act on the node; "Analyse this block
+  now" reads one block through the same read-only client, CSRF-protected, one at a time with a cooldown).
 - Requires a running, synced `bitcoind` service; remote nodes are not supported in the StartOS package (use the
   upstream app directly for that).
 
@@ -115,4 +116,5 @@ cd bitcoinmonetaryview-startos
 npm ci && make            # needs start-cli, see https://docs.start9.com/packaging/environment-setup.html
 ```
 
-Sideload the resulting `bitcoinmonetaryview.s9pk` in StartOS (System → Sideload).
+Sideload the resulting `.s9pk` in StartOS (System → Sideload). Released versions are attached to this repo's
+[Releases](https://github.com/MarkSierra/BitcoinMonetaryView-startos/releases) (see `UPDATING.md`).
