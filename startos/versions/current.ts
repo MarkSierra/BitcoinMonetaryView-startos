@@ -1,10 +1,10 @@
 import { IMPOSSIBLE, VersionInfo } from '@start9labs/start-sdk'
 
 export const current = VersionInfo.of({
-  version: '0.1.0:2',
+  version: '0.1.0:3',
   releaseNotes: {
-    en_US: 'Dashboard no longer keeps the browser busy (no more laptop fan spin-up). No false plain-HTTP warning for the internal connection to Bitcoin.',
-    de_DE: 'Das Dashboard belastet den Browser nicht mehr dauerhaft (kein hochdrehender Laptop-Lüfter mehr). Keine falsche Klartext-HTTP-Warnung mehr für die interne Verbindung zu Bitcoin.',
+    en_US: 'Whole-chain spam estimate within minutes of the first start (sample pass), refined to exact figures as the full scan proceeds. Quieter dashboard: no more continuous redraws or reload-like refreshes.',
+    de_DE: 'Spam-Schätzung für die ganze Chain schon wenige Minuten nach dem ersten Start (Stichprobe), die mit dem vollständigen Scan zu exakten Werten wird. Ruhigeres Dashboard: kein ständiges Neuzeichnen und kein scheinbares Neuladen mehr.',
   },
   migrations: {
     up: async ({ effects }) => {},
