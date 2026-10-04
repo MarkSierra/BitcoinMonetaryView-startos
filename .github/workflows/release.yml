@@ -1,0 +1,53 @@
+name: Release
+
+# When a version tag is published (e.g. by creating a GitHub release "v0.2.0.0" for package
+# version 0.2.0:0), build both architectures and attach the .s9pk files and their SHA-256
+# checksums to that release. Release files never expire, unlike build artifacts.
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Tag must match the package version
+        run: |
+          version=$(sed -n "s/^ *version: '\(.*\)',/\1/p" startos/versions/current.ts)
+          expected="v${version/:/.}"
+          if [ "$GITHUB_REF_NAME" != "$expected" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match package version $version (expected tag $expected)"
+            exit 1
+          fi
+
+  build:
+    needs: check
+    uses: Start9Labs/start-technologies/.github/workflows/build.yml@master
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: '*.s9pk'
+          path: dist
+          merge-multiple: true
+      - name: Attach to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          cd dist
+          ls -l
+          sha256sum *.s9pk > SHA256SUMS
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" *.s9pk SHA256SUMS --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" *.s9pk SHA256SUMS --title "$GITHUB_REF_NAME" \
+              --notes "Sideload the .s9pk for your architecture in StartOS (System → Sideload)."
+          fi

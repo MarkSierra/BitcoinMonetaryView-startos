@@ -15,3 +15,14 @@ This package builds BitcoinMonetaryView from the `upstream` git submodule
    historical version and create a new `current.ts` if a migration is needed — see the packaging guide).
 3. If upstream changed its settings schema (`docs/settings.md`), update `startos/fileModels/settings.json.ts`
    and the actions.
+
+## Publishing a release
+
+Build artifacts of the *Build* workflow expire after 14 days. To keep every version downloadable,
+publish a GitHub release for it:
+
+1. Make sure `main` carries the new version in `startos/versions/current.ts` (e.g. `0.2.0:0`).
+2. On GitHub: Releases → *Draft a new release* → new tag **`v` + the version with `:` replaced by `.`**
+   (e.g. `v0.2.0.0` for `0.2.0:0`) on `main` → describe the changes → *Publish release*.
+3. The *Release* workflow checks that the tag matches the version, builds both architectures and attaches
+   `bitcoinmonetaryview_x86_64.s9pk`, `bitcoinmonetaryview_aarch64.s9pk` and `SHA256SUMS` to the release.
