@@ -25,7 +25,10 @@ Build artifacts of the *Build* workflow expire after 14 days. To keep every vers
 publish a GitHub release for it:
 
 1. Make sure `main` carries the new version in `startos/versions/current.ts` (e.g. `0.2.0:0`).
-2. On GitHub: Releases → *Draft a new release* → new tag **`v` + the version with `:` replaced by `.`**
-   (e.g. `v0.2.0.0` for `0.2.0:0`) on `main` → describe the changes → *Publish release*.
+2. On GitHub: Releases → *Draft a new release* → new tag **`v` + the version with `:` replaced by `_`**
+   (e.g. `v0.2.2_0` for `0.2.2:0`, Start9's
+   [tag convention](https://docs.start9.com/packaging/0.4.0.x/versions.html#git-tag-conventions)) on `main` →
+   describe the changes → *Publish release*. (Releases up to `v0.2.2.0` used a `.` instead; they stay as
+   they are.)
 3. The *Release* workflow checks that the tag matches the version, builds both architectures and attaches
    `bitcoinmonetaryview_x86_64.s9pk`, `bitcoinmonetaryview_aarch64.s9pk` and `SHA256SUMS` to the release.

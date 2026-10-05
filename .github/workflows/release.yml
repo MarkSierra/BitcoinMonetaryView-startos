@@ -1,7 +1,7 @@
 name: Release
 
-# When a version tag is published (e.g. by creating a GitHub release "v0.2.0.0" for package
-# version 0.2.0:0), build both architectures and attach the .s9pk files and their SHA-256
+# When a version tag is published (e.g. by creating a GitHub release "v0.2.2_0" for package
+# version 0.2.2:0 — Start9's tag convention), build both architectures and attach the .s9pk files and their SHA-256
 # checksums to that release. Release files never expire, unlike build artifacts.
 on:
   push:
@@ -18,7 +18,7 @@ jobs:
       - name: Tag must match the package version
         run: |
           version=$(sed -n "s/^ *version: '\(.*\)',/\1/p" startos/versions/current.ts)
-          expected="v${version/:/.}"
+          expected="v${version/:/_}"
           if [ "$GITHUB_REF_NAME" != "$expected" ]; then
             echo "::error::Tag $GITHUB_REF_NAME does not match package version $version (expected tag $expected)"
             exit 1
