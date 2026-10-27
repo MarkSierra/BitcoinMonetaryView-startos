@@ -1,11 +1,14 @@
 name: Release
 
-# When a version tag is published (e.g. by creating a GitHub release "v0.2.2_0" for package
-# version 0.2.2:0 — Start9's tag convention), build both architectures and attach the .s9pk files and their SHA-256
-# checksums to that release. Release files never expire, unlike build artifacts.
+# Builds both architectures and attaches the .s9pk files and their SHA-256 checksums to the GitHub
+# release for the package version in startos/versions/current.ts. Release files never expire, unlike
+# build artifacts. Tags follow Start9's convention: version 0.2.3:0 -> tag v0.2.3_0.
+# - "Run workflow" on main: creates the tag and the release (notes from releaseNotes.en_US), then builds.
+# - Publishing a release / pushing a version tag by hand: builds for that tag.
 on:
   push:
     tags: ['v*']
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -13,23 +16,39 @@ permissions:
 jobs:
   check:
     runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
     steps:
       - uses: actions/checkout@v7
-      - name: Tag must match the package version
+      - id: tag
+        name: Tag must match the package version
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
+          set -euo pipefail
           version=$(sed -n "s/^ *version: '\(.*\)',/\1/p" startos/versions/current.ts)
           expected="v${version/:/_}"
-          if [ "$GITHUB_REF_NAME" != "$expected" ]; then
-            echo "::error::Tag $GITHUB_REF_NAME does not match package version $version (expected tag $expected)"
-            exit 1
+          if [ "$GITHUB_EVENT_NAME" = "push" ]; then
+            if [ "$GITHUB_REF_NAME" != "$expected" ]; then
+              echo "::error::Tag $GITHUB_REF_NAME does not match package version $version (expected tag $expected)"
+              exit 1
+            fi
+          else
+            [ "$GITHUB_REF" = "refs/heads/main" ] || { echo "::error::Run this workflow on main"; exit 1; }
+            if ! gh release view "$expected" >/dev/null 2>&1; then
+              notes=$(sed -n "s/^ *en_US: '\(.*\)',$/\1/p" startos/versions/current.ts | head -1 | sed "s/\\\\'/'/g")
+              printf '%s\n\nSideload the .s9pk for your architecture in StartOS (System → Sideload).\n' "$notes" > notes.md
+              gh release create "$expected" --target "$GITHUB_SHA" --title "$expected" --notes-file notes.md
+            fi
           fi
+          echo "tag=$expected" >> "$GITHUB_OUTPUT"
 
   build:
     needs: check
     uses: Start9Labs/start-technologies/.github/workflows/build.yml@master
 
   publish:
-    needs: build
+    needs: [check, build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v4
@@ -41,13 +60,14 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
+          TAG: ${{ needs.check.outputs.tag }}
         run: |
           cd dist
           ls -l
           sha256sum *.s9pk > SHA256SUMS
-          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
-            gh release upload "$GITHUB_REF_NAME" *.s9pk SHA256SUMS --clobber
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" *.s9pk SHA256SUMS --clobber
           else
-            gh release create "$GITHUB_REF_NAME" *.s9pk SHA256SUMS --title "$GITHUB_REF_NAME" \
+            gh release create "$TAG" *.s9pk SHA256SUMS --title "$TAG" \
               --notes "Sideload the .s9pk for your architecture in StartOS (System → Sideload)."
           fi
