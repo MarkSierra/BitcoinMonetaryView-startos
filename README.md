@@ -40,7 +40,7 @@ Strictly read-only towards the node.
 | Property      | Value                                                          |
 | ------------- | -------------------------------------------------------------- |
 | Image         | built from `Dockerfile`: Python slim base image + `upstream/`  |
-| Architectures | x86_64, aarch64                                                |
+| Architectures | x86_64, aarch64, riscv64                                       |
 | Command       | `python3 -m bitcoinmonetaryview --data-dir /data`              |
 | User          | root inside the subcontainer (bitcoind's cookie is root-only)  |
 
@@ -141,7 +141,7 @@ the upstream version and publishing releases.
 
 ```yaml
 package_id: bitcoinmonetaryview
-architectures: [x86_64, aarch64]
+architectures: [x86_64, aarch64, riscv64]
 volumes:
   main: /data
 dependency_mounts:
