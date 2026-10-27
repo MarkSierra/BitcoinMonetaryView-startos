@@ -28,7 +28,8 @@ publish a GitHub release for it:
 2. Actions → *Release* → *Run workflow* on `main`. It creates the tag **`v` + the version with `:` replaced by
    `_`** (e.g. `v0.2.3_0` for `0.2.3:0`, Start9's
    [tag convention](https://docs.start9.com/packaging/0.4.0.x/versions.html#git-tag-conventions)) and the GitHub
-   release, with the English release notes from `current.ts`. Publishing a release with that tag on GitHub by
-   hand works too. (Releases up to `v0.2.2.0` used a `.` instead; they stay as they are.)
+   release, with the English release notes from `current.ts` and GitHub's list of merged pull requests.
+   Running it again with *notes only* refreshes the notes of a published release without a new build.
+   Publishing a release with that tag on GitHub by hand works too. (Releases up to `v0.2.2.0` used a `.` instead; they stay as they are.)
 3. The *Release* workflow checks that the tag matches the version, builds both architectures and attaches
    `bitcoinmonetaryview_x86_64.s9pk`, `bitcoinmonetaryview_aarch64.s9pk` and `SHA256SUMS` to the release.

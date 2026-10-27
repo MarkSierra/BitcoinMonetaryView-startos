@@ -3,12 +3,19 @@ name: Release
 # Builds both architectures and attaches the .s9pk files and their SHA-256 checksums to the GitHub
 # release for the package version in startos/versions/current.ts. Release files never expire, unlike
 # build artifacts. Tags follow Start9's convention: version 0.2.3:0 -> tag v0.2.3_0.
-# - "Run workflow" on main: creates the tag and the release (notes from releaseNotes.en_US), then builds.
+# - "Run workflow" on main: creates the tag and the release, then builds. The notes are
+#   "Monetary View X.Y.Z for StartOS", releaseNotes.en_US and GitHub's list of merged pull requests;
+#   for an existing release they are refreshed, and with "notes only" nothing else happens.
 # - Publishing a release / pushing a version tag by hand: builds for that tag.
 on:
   push:
     tags: ['v*']
   workflow_dispatch:
+    inputs:
+      notes_only:
+        description: 'Only refresh the release notes of the current version (no build)'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -35,11 +42,21 @@ jobs:
             fi
           else
             [ "$GITHUB_REF" = "refs/heads/main" ] || { echo "::error::Run this workflow on main"; exit 1; }
-            if ! gh release view "$expected" >/dev/null 2>&1; then
-              # en_US may sit on the key's line or the next one (Prettier wraps long strings)
-              notes=$(perl -0ne "print \$1 =~ s/\\\\'/'/gr if /en_US:\s*'((?:[^'\\\\]|\\\\.)*)'/" startos/versions/current.ts)
-              [ -n "$notes" ] || { echo "::error::No en_US release notes in startos/versions/current.ts"; exit 1; }
-              printf '%s\n\nSideload the .s9pk for your architecture in StartOS (System → Sideload).\n' "$notes" > notes.md
+            # en_US may sit on the key's line or the next one (Prettier wraps long strings)
+            notes=$(perl -0ne "print \$1 =~ s/\\\\'/'/gr if /en_US:\s*'((?:[^'\\\\]|\\\\.)*)'/" startos/versions/current.ts)
+            [ -n "$notes" ] || { echo "::error::No en_US release notes in startos/versions/current.ts"; exit 1; }
+            upstream=${version%%:*}
+            notes=${notes#"Monetary View $upstream: "}   # the heading below already says it
+            notes=${notes^}
+            {
+              printf 'Monetary View %s for StartOS\n\n%s\n\n' "$upstream" "$notes"
+              printf 'Sideload the .s9pk for your architecture in StartOS (System → Sideload).\n\n'
+              gh api "repos/$GITHUB_REPOSITORY/releases/generate-notes" -f tag_name="$expected" \
+                -f target_commitish="$GITHUB_SHA" --jq .body
+            } > notes.md
+            if gh release view "$expected" >/dev/null 2>&1; then
+              gh release edit "$expected" --notes-file notes.md
+            else
               gh release create "$expected" --target "$GITHUB_SHA" --title "$expected" --notes-file notes.md
             fi
           fi
@@ -47,6 +64,7 @@ jobs:
 
   build:
     needs: check
+    if: ${{ !inputs.notes_only }}
     uses: Start9Labs/start-technologies/.github/workflows/build.yml@master
 
   publish:
