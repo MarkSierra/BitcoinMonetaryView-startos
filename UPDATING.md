@@ -13,9 +13,12 @@ This package builds BitcoinMonetaryView from the `upstream` git submodule
 1. `git -C upstream checkout <tag or commit>` and `git add upstream`.
 2. Bump `version` in `startos/versions/current.ts` (upstream version + `:0`, or rename the file into a
    historical version and create a new `current.ts` if a migration is needed — see the packaging guide).
-   Write `releaseNotes` in English (`en_US`) and German (`de_DE`): StartOS shows them in the user's
-   interface language. Keep the German texts in `startos/manifest/i18n.ts` and
-   `startos/i18n/dictionaries/translations.ts` in step with the English ones too.
+   Write `releaseNotes` in all five StartOS languages — English (`en_US`), German (`de_DE`), Spanish
+   (`es_ES`), French (`fr_FR`) and Polish (`pl_PL`): StartOS shows them in its system language, English
+   otherwise. Keep the translations in `startos/manifest/i18n.ts` and
+   `startos/i18n/dictionaries/translations.ts` in step with the English texts too, using the same wording
+   as the dashboard (upstream `bitcoinmonetaryview/static/i18n/<lang>.js`). `en_US` must stay a single
+   quoted string: the *Release* workflow takes the GitHub release notes from it.
 3. If upstream changed its settings schema (`docs/settings.md`), update `startos/fileModels/settings.json.ts`
    and the actions.
 

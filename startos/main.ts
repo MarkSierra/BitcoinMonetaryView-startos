@@ -1,6 +1,7 @@
 import { T } from '@start9labs/start-sdk'
 import { settingsJson } from './fileModels/settings.json'
 import { i18n } from './i18n'
+import { I18nKey } from './i18n/dictionaries/default'
 import { sdk } from './sdk'
 import {
   bitcoindRpcAddress,
@@ -18,6 +19,20 @@ const STATUS_SCRIPT = [
   'print(json.dumps({"phase": d.get("phase"), "label": d.get("phase_label"),',
   '                  "progress": d.get("progress"), "detail": d.get("detail")}))',
 ].join('\n')
+
+/** Scan phases of /api/status, named in the package's languages. */
+const PHASES: Record<string, I18nKey> = {
+  starting: 'Starting up',
+  connecting: 'Connecting',
+  waiting_node: 'Waiting for Bitcoin',
+  loading_filter: 'Loading spent-output filter',
+  quick: 'Quick pass',
+  sample: 'Sampling the chain',
+  full: 'Full history scan',
+  paused: 'Paused',
+  window: 'Waiting for scan window',
+  utxo_info: 'Reading UTXO set size',
+}
 
 export const main = sdk.setupMain(async ({ effects }) => {
   console.info(i18n('Starting BitcoinMonetaryView'))
@@ -132,11 +147,19 @@ export const main = sdk.setupMain(async ({ effects }) => {
           if (st.phase === 'error') {
             return { result: 'failure', message: st.detail ?? label }
           }
-          const pct =
-            typeof st.progress === 'number'
-              ? ` ${st.progress.toFixed(1)} %`
-              : ''
-          return { result: 'loading', message: `${label}${pct}` }
+          // the scan phase in StartOS's language (the app's own label is English)
+          const name =
+            st.phase && PHASES[st.phase] ? i18n(PHASES[st.phase]) : label
+          if (typeof st.progress !== 'number') {
+            return { result: 'loading', message: name }
+          }
+          return {
+            result: 'loading',
+            message: i18n('${phase}: ${progress} %', {
+              phase: name,
+              progress: Math.round(st.progress * 10) / 10,
+            }),
+          }
         },
       },
       requires: ['primary'],
