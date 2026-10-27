@@ -1,0 +1,12 @@
+# Keeps the CI actions and the Docker base image up to date (opens pull requests, merges nothing by itself).
+# The upstream submodule is moved to each BitcoinMonetaryView release by hand (see UPDATING.md).
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      interval: weekly
