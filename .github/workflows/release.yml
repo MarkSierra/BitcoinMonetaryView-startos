@@ -36,7 +36,9 @@ jobs:
           else
             [ "$GITHUB_REF" = "refs/heads/main" ] || { echo "::error::Run this workflow on main"; exit 1; }
             if ! gh release view "$expected" >/dev/null 2>&1; then
-              notes=$(sed -n "s/^ *en_US: '\(.*\)',$/\1/p" startos/versions/current.ts | head -1 | sed "s/\\\\'/'/g")
+              # en_US may sit on the key's line or the next one (Prettier wraps long strings)
+              notes=$(perl -0ne "print \$1 =~ s/\\\\'/'/gr if /en_US:\s*'((?:[^'\\\\]|\\\\.)*)'/" startos/versions/current.ts)
+              [ -n "$notes" ] || { echo "::error::No en_US release notes in startos/versions/current.ts"; exit 1; }
               printf '%s\n\nSideload the .s9pk for your architecture in StartOS (System → Sideload).\n' "$notes" > notes.md
               gh release create "$expected" --target "$GITHUB_SHA" --title "$expected" --notes-file notes.md
             fi
