@@ -14,7 +14,7 @@ git clone --recurse-submodules https://github.com/MarkSierra/bitcoinmonetaryview
 cd bitcoinmonetaryview-startos
 npm ci
 npm run check     # TypeScript type check
-make              # builds one .s9pk per architecture (x86_64, aarch64)
+make              # builds one .s9pk per architecture (x86_64, aarch64, riscv64)
 ```
 
 Install the resulting `.s9pk` on a StartOS server via System → Sideload. Every pull request and push is also

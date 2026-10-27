@@ -32,4 +32,5 @@ publish a GitHub release for it:
    Running it again with *notes only* refreshes the notes of a published release without a new build.
    Publishing a release with that tag on GitHub by hand works too. (Releases up to `v0.2.2.0` used a `.` instead; they stay as they are.)
 3. The *Release* workflow checks that the tag matches the version, builds both architectures and attaches
-   `bitcoinmonetaryview_x86_64.s9pk`, `bitcoinmonetaryview_aarch64.s9pk` and `SHA256SUMS` to the release.
+   `bitcoinmonetaryview_x86_64.s9pk`, `bitcoinmonetaryview_aarch64.s9pk`, `bitcoinmonetaryview_riscv64.s9pk` and
+   `SHA256SUMS` to the release.
