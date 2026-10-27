@@ -70,12 +70,21 @@ jobs:
   publish:
     needs: [check, build]
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write        # signs the provenance attestation (Sigstore, keyless)
+      attestations: write
     steps:
       - uses: actions/download-artifact@v4
         with:
           pattern: '*.s9pk'
           path: dist
           merge-multiple: true
+      # Signed statement that these exact files were built by this workflow from this commit.
+      # Verify: gh attestation verify bitcoinmonetaryview_x86_64.s9pk --repo MarkSierra/BitcoinMonetaryView-startos
+      - uses: actions/attest-build-provenance@v4
+        with:
+          subject-path: dist/*.s9pk
       - name: Attach to the release
         env:
           GH_TOKEN: ${{ github.token }}

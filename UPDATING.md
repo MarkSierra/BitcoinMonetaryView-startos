@@ -34,3 +34,7 @@ publish a GitHub release for it:
 3. The *Release* workflow checks that the tag matches the version, builds both architectures and attaches
    `bitcoinmonetaryview_x86_64.s9pk`, `bitcoinmonetaryview_aarch64.s9pk`, `bitcoinmonetaryview_riscv64.s9pk` and
    `SHA256SUMS` to the release.
+
+The *Release* workflow also attaches a signed build-provenance attestation to every `.s9pk` (GitHub's keyless
+Sigstore signing). Anyone can check that a downloaded file was built by this repository's workflow:
+`gh attestation verify bitcoinmonetaryview_x86_64.s9pk --repo MarkSierra/BitcoinMonetaryView-startos`.
