@@ -35,6 +35,16 @@ const dict = {
   'Scan Progress': 31,
   'Starting up': 32,
   'Up to date — following new blocks': 33,
+  Connecting: 34,
+  'Waiting for Bitcoin': 35,
+  'Loading spent-output filter': 36,
+  'Quick pass': 37,
+  'Sampling the chain': 38,
+  'Full history scan': 39,
+  Paused: 40,
+  'Waiting for scan window': 41,
+  'Reading UTXO set size': 42,
+  '${phase}: ${progress} %': 43,
 } as const
 
 /**
