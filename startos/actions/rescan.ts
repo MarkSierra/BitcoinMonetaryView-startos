@@ -9,7 +9,7 @@ export const rescan = sdk.Action.withoutInput(
   async () => ({
     name: i18n('Rescan From Scratch'),
     description: i18n(
-      "Delete BitcoinMonetaryView's own analysis results and scan the whole chain again on the next start. Settings are kept. Your Bitcoin node is not touched. Stop the service before running this action.",
+      "Delete Monetary View's own analysis results and scan the whole chain again on the next start. Settings are kept. Your Bitcoin node is not touched. Stop the service before running this action.",
     ),
     warning: i18n(
       'All analysis results are deleted. The full history scan starts again and can take a day or more.',
@@ -27,7 +27,7 @@ export const rescan = sdk.Action.withoutInput(
     return {
       version: '1',
       title: i18n('Results Deleted'),
-      message: i18n('Start BitcoinMonetaryView to begin a fresh scan.'),
+      message: i18n('Start Monetary View to begin a fresh scan.'),
       result: null,
     }
   },

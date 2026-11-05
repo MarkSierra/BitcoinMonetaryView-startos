@@ -23,7 +23,7 @@ export const spamRules = sdk.Action.withInput(
       'Options of the Monetary Node spam rules used for the analysis.',
     ),
     warning: i18n(
-      'Changing a rule makes BitcoinMonetaryView delete its results and rescan the whole chain, which can take a day or more. Your Bitcoin node is not affected.',
+      'Changing a rule makes Monetary View delete its results and rescan the whole chain, which can take a day or more. Your Bitcoin node is not affected.',
     ),
     allowedStatuses: 'any',
     group: null,

@@ -35,7 +35,7 @@ const PHASES: Record<string, I18nKey> = {
 }
 
 export const main = sdk.setupMain(async ({ effects }) => {
-  console.info(i18n('Starting BitcoinMonetaryView'))
+  console.info(i18n('Starting Monetary View'))
 
   // Seed defaults on first start; restarts are not needed on change — the app watches the file.
   await settingsJson.merge(effects, {})

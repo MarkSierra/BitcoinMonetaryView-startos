@@ -1,6 +1,6 @@
 # Updating the upstream version
 
-This package builds BitcoinMonetaryView from the `upstream` git submodule
+This package builds Monetary View from the `upstream` git submodule
 ([MarkSierra/BitcoinMonetaryView](https://github.com/MarkSierra/BitcoinMonetaryView)).
 
 ## Determining the upstream version
