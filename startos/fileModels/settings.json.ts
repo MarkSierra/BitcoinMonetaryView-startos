@@ -9,7 +9,7 @@ import { sdk } from '../sdk'
  * this file). The app itself is self-healing too: invalid values fall back to defaults.
  * Schema reference: https://github.com/MarkSierra/BitcoinMonetaryView/blob/main/docs/settings.md
  */
-const shape = z.object({
+const shape = z.looseObject({
   speed_profile: z.enum(['eco', 'balanced', 'full']).catch('eco'),
   scan_window: z
     .string()

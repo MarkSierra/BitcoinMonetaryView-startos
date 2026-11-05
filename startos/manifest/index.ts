@@ -1,10 +1,10 @@
 import { setupManifest } from '@start9labs/start-sdk'
-import { bitcoindDescription, long, short } from './i18n'
+import { long, short } from './i18n'
 
 export const manifest = setupManifest({
   id: 'bitcoinmonetaryview',
   title: 'Monetary View',
-  license: 'AGPL-3.0',
+  license: 'AGPL-3.0-or-later',
   packageRepo: 'https://github.com/MarkSierra/bitcoinmonetaryview-startos',
   upstreamRepo: 'https://github.com/MarkSierra/BitcoinMonetaryView',
   marketingUrl: 'https://github.com/MarkSierra/BitcoinMonetaryView',
@@ -21,16 +21,6 @@ export const manifest = setupManifest({
         },
       },
       arch: ['x86_64', 'aarch64', 'riscv64'],
-    },
-  },
-  dependencies: {
-    bitcoind: {
-      description: bitcoindDescription,
-      optional: false,
-      metadata: {
-        title: 'Bitcoin',
-        icon: 'https://raw.githubusercontent.com/Start9Labs/bitcoin-core-startos/refs/heads/30.x/dep-icon.svg',
-      },
     },
   },
 })
