@@ -1,18 +1,18 @@
 import { IMPOSSIBLE, VersionInfo } from '@start9labs/start-sdk'
 
 export const current = VersionInfo.of({
-  version: '0.3.3:0',
+  version: '0.3.4:0',
   releaseNotes: {
     en_US:
-      'Monetary View 0.3.3: a dashboard tab or installed app window that stays open now reloads itself once when the app has been updated, so it no longer keeps showing the old version until you reload it by hand.',
+      'Monetary View 0.3.4: the About page, the description and the docs now state that Monetary View is an independent project, not affiliated with or endorsed by the Monetary Node project, and that it uses its published spam rules unchanged. The figures are unchanged.',
     de_DE:
-      'Monetary View 0.3.3: Ein Dashboard-Tab oder ein installiertes App-Fenster, das offen bleibt, lädt sich jetzt nach einem Update der App einmal selbst neu und zeigt nicht mehr die alte Version, bis man von Hand neu lädt.',
+      'Monetary View 0.3.4: Die Über-Seite, die Beschreibung und die Dokumentation sagen jetzt, dass Monetary View ein unabhängiges Projekt ist, das in keiner Verbindung zum Monetary-Node-Projekt steht und von ihm nicht unterstützt wird, und dass es dessen veröffentlichte Spam-Regeln unverändert verwendet. Die Zahlen bleiben gleich.',
     es_ES:
-      'Monetary View 0.3.3: una pestaña del panel o una ventana de la app instalada que sigue abierta ahora se recarga sola una vez cuando la app se ha actualizado, así que ya no sigue mostrando la versión anterior hasta que la recargas a mano.',
+      'Monetary View 0.3.4: la página Acerca de, la descripción y la documentación indican ahora que Monetary View es un proyecto independiente, no afiliado al proyecto Monetary Node ni respaldado por él, y que usa sus reglas de spam publicadas sin cambios. Las cifras no cambian.',
     fr_FR:
-      'Monetary View 0.3.3 : un onglet du tableau de bord ou une fenêtre de l’application installée qui reste ouvert se recharge désormais une fois tout seul après une mise à jour de l’application ; il n’affiche donc plus l’ancienne version jusqu’à ce que vous le rechargiez à la main.',
+      'Monetary View 0.3.4 : la page À propos, la description et la documentation indiquent désormais que Monetary View est un projet indépendant, ni affilié au projet Monetary Node ni approuvé par lui, et qu’il utilise ses règles anti-spam publiées sans modification. Les chiffres ne changent pas.',
     pl_PL:
-      'Monetary View 0.3.3: otwarta karta panelu lub okno zainstalowanej aplikacji odświeża się teraz samo jeden raz po aktualizacji aplikacji, więc nie pokazuje już starej wersji, dopóki nie odświeżysz jej ręcznie.',
+      'Monetary View 0.3.4: strona O aplikacji, opis i dokumentacja informują teraz, że Monetary View to niezależny projekt, niepowiązany z projektem Monetary Node ani przez niego niepopierany, i że korzysta z jego opublikowanych reguł dotyczących spamu bez zmian. Liczby się nie zmieniają.',
   },
   migrations: {
     up: async ({ effects }) => {},
