@@ -17,7 +17,8 @@ const STATUS_SCRIPT = [
   `r = urllib.request.urlopen("http://127.0.0.1:${uiPort}/api/status", timeout=5)`,
   'd = json.load(r)',
   'print(json.dumps({"phase": d.get("phase"), "label": d.get("phase_label"),',
-  '                  "progress": d.get("progress"), "detail": d.get("detail")}))',
+  '                  "progress": d.get("progress"), "detail": d.get("detail"),',
+  '                  "by_data": bool(d.get("total_bytes_estimate"))}))',
 ].join('\n')
 
 /** Scan phases of /api/status, named in the package's languages. */
@@ -131,6 +132,7 @@ export const main = sdk.setupMain(async ({ effects }) => {
             label?: string
             progress?: number
             detail?: string
+            by_data?: boolean
           }
           try {
             st = JSON.parse(String(res.stdout))
@@ -152,6 +154,16 @@ export const main = sdk.setupMain(async ({ effects }) => {
             st.phase && PHASES[st.phase] ? i18n(PHASES[st.phase]) : label
           if (typeof st.progress !== 'number') {
             return { result: 'loading', message: name }
+          }
+          // the full scan measures progress by data volume, as the dashboard says
+          if (st.phase === 'full' && st.by_data) {
+            return {
+              result: 'loading',
+              message: i18n('${phase}: ${progress} % of data', {
+                phase: name,
+                progress: Math.round(st.progress * 100) / 100,
+              }),
+            }
           }
           return {
             result: 'loading',

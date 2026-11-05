@@ -47,6 +47,7 @@ export default {
     41: 'Warte auf Scan-Zeitfenster',
     42: 'Lese Größe des UTXO-Sets',
     43: '${phase}: ${progress} %',
+    44: '${phase}: ${progress} % der Daten',
   },
   es_ES: {
     0: 'Volver a escanear desde cero',
@@ -93,6 +94,7 @@ export default {
     41: 'Esperando la ventana de escaneo',
     42: 'Leyendo el tamaño del conjunto UTXO',
     43: '${phase}: ${progress} %',
+    44: '${phase}: ${progress} % de los datos',
   },
   fr_FR: {
     0: 'Tout réanalyser depuis le début',
@@ -139,6 +141,7 @@ export default {
     41: 'En attente de la fenêtre d’analyse',
     42: 'Lecture de la taille de l’ensemble UTXO',
     43: '${phase} : ${progress} %',
+    44: '${phase} : ${progress} % des données',
   },
   pl_PL: {
     0: 'Skanuj od nowa',
@@ -185,5 +188,6 @@ export default {
     41: 'Czekam na okno skanowania',
     42: 'Odczytuję rozmiar zbioru UTXO',
     43: '${phase}: ${progress} %',
+    44: '${phase}: ${progress} % danych',
   },
 } satisfies Record<string, LangDict>
