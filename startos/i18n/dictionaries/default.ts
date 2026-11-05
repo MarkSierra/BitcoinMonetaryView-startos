@@ -45,6 +45,7 @@ const dict = {
   'Waiting for scan window': 41,
   'Reading UTXO set size': 42,
   '${phase}: ${progress} %': 43,
+  '${phase}: ${progress} % of data': 44,
 } as const
 
 /**
