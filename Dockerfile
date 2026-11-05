@@ -1,8 +1,8 @@
 # Image for the StartOS package, built from the pinned upstream submodule.
 # Pure Python standard library: no packages to install.
-# Base image pinned by digest: every build uses exactly this image. Dependabot opens a PR
-# when python:3.12-slim gets a new digest (Python or Debian security updates).
-FROM python:3.12-slim@sha256:12316debbfb86890f6b2d825820612741ba527ad5a44e3902759141d572bfe8f
+# Base image pinned by digest: exactly the one in upstream/Dockerfile, the image the app is tested
+# on. Move it with each upstream bump (the Build workflow checks that the two match).
+FROM python:3.15-slim@sha256:e97b88e416c3c01eb427b21fd8cd3ebf006e6ee38afcfcc3cae1c54ee2ab0a75
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1

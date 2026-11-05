@@ -1,18 +1,18 @@
 import { IMPOSSIBLE, VersionInfo } from '@start9labs/start-sdk'
 
 export const current = VersionInfo.of({
-  version: '0.3.4:0',
+  version: '0.3.5:0',
   releaseNotes: {
     en_US:
-      'Monetary View 0.3.4: the About page, the description and the docs now state that Monetary View is an independent project, not affiliated with or endorsed by the Monetary Node project, and that it uses its published spam rules unchanged. The figures are unchanged.',
+      'Monetary View 0.3.5 requires StartOS 0.4.1 or newer. It runs on Python 3.15 (previously 3.12) and is built with the current StartOS SDK, which also keeps the health checks from using more memory over time. Bitcoin Knots is now listed explicitly as a supported node. No change to the dashboard or its figures.',
     de_DE:
-      'Monetary View 0.3.4: Die Über-Seite, die Beschreibung und die Dokumentation sagen jetzt, dass Monetary View ein unabhängiges Projekt ist, das in keiner Verbindung zum Monetary-Node-Projekt steht und von ihm nicht unterstützt wird, und dass es dessen veröffentlichte Spam-Regeln unverändert verwendet. Die Zahlen bleiben gleich.',
+      'Monetary View 0.3.5 benötigt StartOS 0.4.1 oder neuer. Es läuft mit Python 3.15 (bisher 3.12) und ist mit dem aktuellen StartOS-SDK gebaut, das außerdem verhindert, dass die Statusprüfungen mit der Zeit mehr Speicher belegen. Bitcoin Knots ist jetzt ausdrücklich als unterstützter Node eingetragen. Keine Änderung am Dashboard oder an seinen Zahlen.',
     es_ES:
-      'Monetary View 0.3.4: la página Acerca de, la descripción y la documentación indican ahora que Monetary View es un proyecto independiente, no afiliado al proyecto Monetary Node ni respaldado por él, y que usa sus reglas de spam publicadas sin cambios. Las cifras no cambian.',
+      'Monetary View 0.3.5 requiere StartOS 0.4.1 o posterior. Funciona con Python 3.15 (antes 3.12) y está construido con el SDK actual de StartOS, que además evita que las comprobaciones de estado usen cada vez más memoria. Bitcoin Knots figura ahora explícitamente como nodo compatible. Sin cambios en el panel ni en sus cifras.',
     fr_FR:
-      'Monetary View 0.3.4 : la page À propos, la description et la documentation indiquent désormais que Monetary View est un projet indépendant, ni affilié au projet Monetary Node ni approuvé par lui, et qu’il utilise ses règles anti-spam publiées sans modification. Les chiffres ne changent pas.',
+      'Monetary View 0.3.5 nécessite StartOS 0.4.1 ou plus récent. Il fonctionne avec Python 3.15 (auparavant 3.12) et est construit avec le SDK StartOS actuel, qui empêche aussi les vérifications d’état d’utiliser de plus en plus de mémoire. Bitcoin Knots figure désormais explicitement parmi les nœuds pris en charge. Aucun changement dans le tableau de bord ni dans ses chiffres.',
     pl_PL:
-      'Monetary View 0.3.4: strona O aplikacji, opis i dokumentacja informują teraz, że Monetary View to niezależny projekt, niepowiązany z projektem Monetary Node ani przez niego niepopierany, i że korzysta z jego opublikowanych reguł dotyczących spamu bez zmian. Liczby się nie zmieniają.',
+      'Monetary View 0.3.5 wymaga StartOS 0.4.1 lub nowszego. Działa na Pythonie 3.15 (wcześniej 3.12) i jest zbudowany z aktualnym SDK StartOS, które dodatkowo zapobiega stopniowemu wzrostowi zużycia pamięci przez kontrole stanu. Bitcoin Knots jest teraz wprost wymieniony jako obsługiwany węzeł. Bez zmian w panelu i jego liczbach.',
   },
   migrations: {
     up: async ({ effects }) => {},

@@ -19,7 +19,9 @@ This package builds BitcoinMonetaryView from the `upstream` git submodule
    `startos/i18n/dictionaries/translations.ts` in step with the English texts too, using the same wording
    as the dashboard (upstream `bitcoinmonetaryview/static/i18n/<lang>.js`). `en_US` must stay a single
    quoted string: the *Release* workflow takes the GitHub release notes from it.
-3. If upstream changed its settings schema (`docs/settings.md`), update `startos/fileModels/settings.json.ts`
+3. Copy the `FROM` line of `upstream/Dockerfile` into `Dockerfile`, so the package runs on the base image the
+   app was tested on (the *Build* workflow fails if they differ).
+4. If upstream changed its settings schema (`docs/settings.md`), update `startos/fileModels/settings.json.ts`
    and the actions.
 
 ## Publishing a release
