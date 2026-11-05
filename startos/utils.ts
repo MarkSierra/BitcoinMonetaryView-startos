@@ -1,7 +1,7 @@
 import { T } from '@start9labs/start-sdk'
 import { sdk } from './sdk'
 
-/** Port the BitcoinMonetaryView web interface listens on inside the container. */
+/** Port the Monetary View web interface listens on inside the container. */
 export const uiPort = 8338
 /** Host id of the Web UI binding (see interfaces.ts). */
 export const mainHostId = 'main'

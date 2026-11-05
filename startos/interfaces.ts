@@ -8,7 +8,7 @@ export const setInterfaces = sdk.setupInterfaces(async ({ effects }) => {
   const ui = sdk.createInterface(effects, {
     name: i18n('Web UI'),
     id: 'ui',
-    description: i18n('The BitcoinMonetaryView dashboard'),
+    description: i18n('The Monetary View dashboard'),
     type: 'ui',
     masked: false,
     schemeOverride: null,

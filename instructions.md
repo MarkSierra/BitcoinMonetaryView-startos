@@ -7,7 +7,7 @@ changes anything on your Bitcoin node.
 
 ## Documentation
 
-- [BitcoinMonetaryView README](https://github.com/MarkSierra/BitcoinMonetaryView#readme) — what is measured and how.
+- [Monetary View README](https://github.com/MarkSierra/BitcoinMonetaryView#readme) — what is measured and how.
 - [Monetary Node](https://github.com/sambitcoin/BitcoinMonetaryNode) — the project the spam rules come from.
 
 ## What you get on StartOS
