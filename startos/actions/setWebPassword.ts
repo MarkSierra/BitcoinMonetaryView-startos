@@ -17,9 +17,6 @@ export const setWebPassword = sdk.Action.withoutInput(
           'This replaces the current password, and the old one stops working.',
         )
       : null,
-    // 'any', not 'only-stopped': after an update from a running 0.3.7:0, StartOS shows the
-    // service as starting (blocked by this task) with no Stop button, so a stopped-only
-    // action could never run. A running service is restarted below instead.
     allowedStatuses: 'any',
     group: null,
     visibility: 'enabled',
@@ -32,8 +29,7 @@ export const setWebPassword = sdk.Action.withoutInput(
       auth_password: password,
     })
 
-    // The app reads settings.json only from its scanner loop, which a long node call can hold
-    // for minutes; a restart makes the new password the only valid one straight away.
+    // The app reloads settings.json only between scan steps, which a node call can hold for minutes.
     if ((await effects.getStatus({}))?.started) {
       await effects.restart()
     }
