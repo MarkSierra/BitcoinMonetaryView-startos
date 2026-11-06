@@ -1,5 +1,4 @@
 import { T } from '@start9labs/start-sdk'
-import { settingsJson } from './fileModels/settings.json'
 import { i18n } from './i18n'
 import { I18nKey } from './i18n/dictionaries/default'
 import { sdk } from './sdk'
@@ -13,8 +12,13 @@ import {
 
 /** Reads /api/status inside the container and prints phase + progress as JSON. */
 const STATUS_SCRIPT = [
-  'import json, urllib.request',
-  `r = urllib.request.urlopen("http://127.0.0.1:${uiPort}/api/status", timeout=5)`,
+  'import base64, json, urllib.request',
+  `s = json.load(open("${dataDir}/settings.json"))`,
+  `q = urllib.request.Request("http://127.0.0.1:${uiPort}/api/status")`,
+  'if s.get("auth_user"):',
+  '    a = base64.b64encode(f\'{s["auth_user"]}:{s.get("auth_password", "")}\'.encode())',
+  '    q.add_header("Authorization", "Basic " + a.decode())',
+  'r = urllib.request.urlopen(q, timeout=5)',
   'd = json.load(r)',
   'print(json.dumps({"phase": d.get("phase"), "label": d.get("phase_label"),',
   '                  "progress": d.get("progress"), "detail": d.get("detail"),',
@@ -37,9 +41,6 @@ const PHASES: Record<string, I18nKey> = {
 
 export const main = sdk.setupMain(async ({ effects }) => {
   console.info(i18n('Starting Monetary View'))
-
-  // Seed defaults on first start; restarts are not needed on change — the app watches the file.
-  await settingsJson.merge(effects, {})
 
   // Null while bitcoind publishes no RPC binding; .const() restarts main when it appears.
   const rpc = await bitcoindRpcAddress(effects)

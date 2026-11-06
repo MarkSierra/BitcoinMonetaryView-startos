@@ -1,9 +1,0 @@
-# Keeps the CI actions up to date (opens pull requests, merges nothing by itself). The Docker base image
-# follows upstream's, which Dependabot updates there; it moves here with each upstream bump.
-# The upstream submodule is moved to each BitcoinMonetaryView release by hand (see UPDATING.md).
-version: 2
-updates:
-  - package-ecosystem: github-actions
-    directory: /
-    schedule:
-      interval: monthly

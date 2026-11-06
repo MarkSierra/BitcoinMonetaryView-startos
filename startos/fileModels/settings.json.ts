@@ -17,6 +17,8 @@ const shape = z.looseObject({
     .catch(''),
   timezone: z.string().min(1).catch('UTC'),
   carrier_policy: z.boolean().catch(true),
+  auth_user: z.string().catch(''),
+  auth_password: z.string().catch(''),
 })
 
 export type Settings = z.infer<typeof shape>

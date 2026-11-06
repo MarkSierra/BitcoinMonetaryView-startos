@@ -18,7 +18,7 @@ const dict = {
   'Time zone for the scan window, as an IANA name such as Europe/Berlin or America/New_York.': 14,
   'Use an IANA time zone name such as Europe/Berlin': 15,
   'Scan Settings': 16,
-  'Choose how fast the history scan runs and, optionally, the hours it may run in. Changes take effect within seconds; no restart needed.': 17,
+  'Choose how fast the history scan runs and, optionally, the hours it may run in. Changes apply without a restart.': 17,
   'Keep verified payment envelopes': 18,
   "Monetary Node's carrier policy: oversized OP_RETURN outputs that are exactly-parsed Shielded Bitcoin payment envelopes count as money, not spam. Turn off to use the ruleset of the Monetary Node project's published figures.": 19,
   'Spam Rules': 20,
@@ -46,6 +46,14 @@ const dict = {
   'Reading UTXO set size': 42,
   '${phase}: ${progress} %': 43,
   '${phase}: ${progress} % of data': 44,
+  'Set Web Password': 45,
+  'Generate a new random password for the Monetary View web interface. Run while the service is stopped; the next start loads it.': 46,
+  'This replaces the current password, and the old one stops working.': 47,
+  'Web Interface Credentials': 48,
+  'Use these to sign in to the Monetary View web interface.': 49,
+  Username: 50,
+  Password: 51,
+  'Set a password for the web interface': 52,
 } as const
 
 /**
