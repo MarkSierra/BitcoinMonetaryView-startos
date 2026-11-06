@@ -1,18 +1,43 @@
 import { IMPOSSIBLE, VersionInfo } from '@start9labs/start-sdk'
 
 export const current = VersionInfo.of({
-  version: '0.3.7:2',
+  version: '0.3.8:0',
   releaseNotes: {
-    en_US:
-      'Monetary View 0.3.7: a realistic remaining-time estimate from the start of the full scan, progress shown as % of data (in the Scan Progress check too), clearer latest-block cards, a status bar that fits every language and phone screens, and the technical settings list folded away. The figures are unchanged. The web interface now requires a password: run Set Web Password to get one.',
-    de_DE:
-      'Monetary View 0.3.7: eine realistische Restzeit ab Beginn des vollständigen Scans, Fortschritt als % der Daten (auch in der Prüfung Scan-Fortschritt), klarere Karten der neuesten Blöcke, eine Statusleiste, die in jede Sprache und auf jedes Handy passt, und eine eingeklappte technische Einstellungsliste. Die Zahlen bleiben gleich. Die Weboberfläche verlangt jetzt ein Passwort: Führe Web-Passwort festlegen aus, um eines zu erhalten.',
-    es_ES:
-      'Monetary View 0.3.7: un tiempo restante realista desde el inicio del escaneo completo, progreso como % de los datos (también en la comprobación Progreso del escaneo), tarjetas de los últimos bloques más claras, una barra de estado que cabe en todos los idiomas y en el móvil, y la lista técnica de ajustes plegada. Las cifras no cambian. La interfaz web ahora requiere contraseña: ejecuta Establecer contraseña web para obtener una.',
-    fr_FR:
-      'Monetary View 0.3.7 : un temps restant réaliste dès le début de l’analyse complète, la progression en % des données (aussi dans la vérification Progression de l’analyse), des cartes des derniers blocs plus claires, une barre d’état qui tient dans toutes les langues et sur mobile, et la liste technique des réglages repliée. Les chiffres ne changent pas. L’interface web exige désormais un mot de passe : lancez Définir le mot de passe web pour en obtenir un.',
-    pl_PL:
-      'Monetary View 0.3.7: realistyczny pozostały czas od początku pełnego skanowania, postęp jako % danych (także w kontroli Postęp skanowania), czytelniejsze karty najnowszych bloków, pasek stanu mieszczący się w każdym języku i na telefonie oraz zwinięta techniczna lista ustawień. Liczby się nie zmieniają. Interfejs webowy wymaga teraz hasła: uruchom Ustaw hasło do interfejsu, aby je otrzymać.',
+    en_US: `Updated Monetary View to 0.3.8.
+
+- New: works with Bitcoin Roots as well as Bitcoin Core and Knots
+- Fix: the latest-block cards no longer cut off the spam and block size
+- Internal: the dashboard's database connections are pooled and closed cleanly
+
+[Full release notes](https://github.com/MarkSierra/BitcoinMonetaryView/releases/tag/v0.3.8)`,
+    de_DE: `Monetary View auf 0.3.8 aktualisiert.
+
+- Neu: funktioniert mit Bitcoin Roots ebenso wie mit Bitcoin Core und Knots
+- Behoben: die Karten der neuesten Blöcke schneiden Spam und Blockgröße nicht mehr ab
+- Intern: die Datenbankverbindungen des Dashboards werden gebündelt und sauber geschlossen
+
+[Vollständige Versionshinweise](https://github.com/MarkSierra/BitcoinMonetaryView/releases/tag/v0.3.8)`,
+    es_ES: `Monetary View actualizado a 0.3.8.
+
+- Nuevo: funciona con Bitcoin Roots además de Bitcoin Core y Knots
+- Corrección: las tarjetas de los últimos bloques ya no cortan el spam ni el tamaño del bloque
+- Interno: las conexiones a la base de datos del panel se reutilizan y se cierran correctamente
+
+[Notas completas de la versión](https://github.com/MarkSierra/BitcoinMonetaryView/releases/tag/v0.3.8)`,
+    fr_FR: `Monetary View mis à jour en 0.3.8.
+
+- Nouveau : fonctionne avec Bitcoin Roots comme avec Bitcoin Core et Knots
+- Correction : les cartes des derniers blocs ne coupent plus le spam ni la taille du bloc
+- Interne : les connexions à la base de données du tableau de bord sont mutualisées et fermées proprement
+
+[Notes de version complètes](https://github.com/MarkSierra/BitcoinMonetaryView/releases/tag/v0.3.8)`,
+    pl_PL: `Zaktualizowano Monetary View do 0.3.8.
+
+- Nowość: działa z Bitcoin Roots, tak jak z Bitcoin Core i Knots
+- Poprawka: karty najnowszych bloków nie obcinają już spamu ani rozmiaru bloku
+- Wewnętrzne: połączenia dashboardu z bazą danych są współdzielone i poprawnie zamykane
+
+[Pełne informacje o wydaniu](https://github.com/MarkSierra/BitcoinMonetaryView/releases/tag/v0.3.8)`,
   },
   migrations: {
     up: async ({ effects }) => {},

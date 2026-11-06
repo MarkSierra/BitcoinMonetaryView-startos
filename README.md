@@ -10,7 +10,7 @@
 > Documentation section of `instructions.md` for links.
 
 [Monetary View](https://github.com/MarkSierra/BitcoinMonetaryView) analyses every block of a Bitcoin
-Core/Knots node with the [Monetary Node](https://github.com/sambitcoin/BitcoinMonetaryNode) rules and shows
+Core, Knots or Roots node with the [Monetary Node](https://github.com/sambitcoin/BitcoinMonetaryNode) rules and shows
 how much spam the node stores, what a Monetary Node would save, and the spam in the current UTXO set.
 It is an independent project, not affiliated with or endorsed by the Monetary Node project; it uses its
 published spam rules unchanged. It is strictly read-only towards the node.
@@ -85,7 +85,7 @@ One required dependency, used read-only. No bitcoind configuration is changed.
 | ---------- | ------- | --------------------------- | ------------------------------------ | ----------------------------------------- |
 | `bitcoind` | running | `bitcoind`, `sync-progress` | `main` → `/mnt/bitcoind` (read-only) | blocks via read-only RPC/REST; RPC cookie |
 
-Bitcoin Core and the Knots flavor are both accepted. The package connects over the LXC bridge to bitcoind's
+Bitcoin Core and the Knots (pre-RDTS) and Roots flavors are accepted. The package connects over the LXC bridge to bitcoind's
 `rpc-local` host (RPC and REST, binary block downloads) when it is published, otherwise to the `rpc` proxy
 (JSON-RPC only; the app then uses RPC and falls back from batch requests). Pruned nodes work with reduced
 coverage.

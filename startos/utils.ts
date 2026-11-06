@@ -23,7 +23,7 @@ export const networkDirs = [
   'regtest',
 ]
 
-// bitcoind (Bitcoin Core / Knots package, id 'bitcoind') host ids and ports, as published by
+// bitcoind (Bitcoin Core / Knots / Roots package, id 'bitcoind') host ids and ports, as published by
 // bitcoin-core-startos (startos/utils.ts). Literals so this package does not depend on it at
 // the npm level.
 /** bitcoind's own RPC + REST listener on the LXC bridge. */
