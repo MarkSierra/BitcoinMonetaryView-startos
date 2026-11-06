@@ -1,9 +1,9 @@
 export const short = {
-  en_US: 'See how much spam your node stores — read-only',
-  de_DE: 'Zeigt, wie viel Spam dein Node speichert — nur lesend',
-  es_ES: 'Mira cuánto spam almacena tu nodo — solo lectura',
-  fr_FR: 'Voyez combien de spam stocke votre nœud — en lecture seule',
-  pl_PL: 'Zobacz, ile spamu przechowuje Twój węzeł — tylko odczyt',
+  en_US: 'See how much spam your Bitcoin node stores — read-only',
+  de_DE: 'Zeigt, wie viel Spam dein Bitcoin-Node speichert — nur lesend',
+  es_ES: 'Mira cuánto spam almacena tu nodo Bitcoin — solo lectura',
+  fr_FR: 'Voyez combien de spam stocke votre nœud Bitcoin — en lecture seule',
+  pl_PL: 'Zobacz, ile spamu przechowuje Twój węzeł Bitcoin — tylko odczyt',
 }
 
 export const long = {
