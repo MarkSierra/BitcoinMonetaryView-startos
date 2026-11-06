@@ -1,102 +1,19 @@
 name: Release
 
-# Builds both architectures and attaches the .s9pk files and their SHA-256 checksums to the GitHub
-# release for the package version in startos/versions/current.ts. Release files never expire, unlike
-# build artifacts. Tags follow Start9's convention: version 0.2.3:0 -> tag v0.2.3_0.
-# - "Run workflow" on main: creates the tag and the release, then builds. The notes are
-#   "Monetary View X.Y.Z for StartOS", releaseNotes.en_US and GitHub's list of merged pull requests;
-#   for an existing release they are refreshed, and with "notes only" nothing else happens.
-# - Publishing a release / pushing a version tag by hand: builds for that tag.
 on:
   push:
-    tags: ['v*']
-  workflow_dispatch:
-    inputs:
-      notes_only:
-        description: 'Only refresh the release notes of the current version (no build)'
-        type: boolean
-        default: false
-
-permissions:
-  contents: write
+    tags:
+      - 'v*.*'
 
 jobs:
-  check:
-    runs-on: ubuntu-latest
-    outputs:
-      tag: ${{ steps.tag.outputs.tag }}
-    steps:
-      - uses: actions/checkout@v7
-      - id: tag
-        name: Tag must match the package version
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          set -euo pipefail
-          version=$(sed -n "s/^ *version: '\(.*\)',/\1/p" startos/versions/current.ts)
-          expected="v${version/:/_}"
-          if [ "$GITHUB_EVENT_NAME" = "push" ]; then
-            if [ "$GITHUB_REF_NAME" != "$expected" ]; then
-              echo "::error::Tag $GITHUB_REF_NAME does not match package version $version (expected tag $expected)"
-              exit 1
-            fi
-          else
-            [ "$GITHUB_REF" = "refs/heads/main" ] || { echo "::error::Run this workflow on main"; exit 1; }
-            # en_US may sit on the key's line or the next one (Prettier wraps long strings)
-            notes=$(perl -0ne "print \$1 =~ s/\\\\'/'/gr if /en_US:\s*'((?:[^'\\\\]|\\\\.)*)'/" startos/versions/current.ts)
-            [ -n "$notes" ] || { echo "::error::No en_US release notes in startos/versions/current.ts"; exit 1; }
-            upstream=${version%%:*}
-            notes=${notes#"Monetary View $upstream: "}   # the heading below already says it
-            notes=${notes^}
-            {
-              printf 'Monetary View %s for StartOS\n\n%s\n\n' "$upstream" "$notes"
-              printf 'Sideload the .s9pk for your architecture in StartOS (System → Sideload).\n\n'
-              gh api "repos/$GITHUB_REPOSITORY/releases/generate-notes" -f tag_name="$expected" \
-                -f target_commitish="$GITHUB_SHA" --jq .body
-            } > notes.md
-            if gh release view "$expected" >/dev/null 2>&1; then
-              gh release edit "$expected" --notes-file notes.md
-            else
-              gh release create "$expected" --target "$GITHUB_SHA" --title "$expected" --notes-file notes.md
-            fi
-          fi
-          echo "tag=$expected" >> "$GITHUB_OUTPUT"
-
-  build:
-    needs: check
-    if: ${{ !inputs.notes_only }}
-    uses: Start9Labs/start-technologies/.github/workflows/build.yml@master
-
-  publish:
-    needs: [check, build]
-    runs-on: ubuntu-latest
+  release:
+    uses: Start9Labs/start-technologies/.github/workflows/release.yml@master
+    with:
+      RELEASE_REGISTRY: ${{ vars.RELEASE_REGISTRY }}
+      S3_S9PKS_BASE_URL: ${{ vars.S3_S9PKS_BASE_URL }}
+    secrets:
+      DEV_KEY: ${{ secrets.DEV_KEY }}
+      S3_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY }}
+      S3_SECRET_KEY: ${{ secrets.S3_SECRET_KEY }}
     permissions:
       contents: write
-      id-token: write        # signs the provenance attestation (Sigstore, keyless)
-      attestations: write
-    steps:
-      - uses: actions/download-artifact@v8
-        with:
-          pattern: '*.s9pk'
-          path: dist
-          merge-multiple: true
-      # Signed statement that these exact files were built by this workflow from this commit.
-      # Verify: gh attestation verify bitcoinmonetaryview_x86_64.s9pk --repo MarkSierra/BitcoinMonetaryView-startos
-      - uses: actions/attest-build-provenance@v4
-        with:
-          subject-path: dist/*.s9pk
-      - name: Attach to the release
-        env:
-          GH_TOKEN: ${{ github.token }}
-          GH_REPO: ${{ github.repository }}
-          TAG: ${{ needs.check.outputs.tag }}
-        run: |
-          cd dist
-          ls -l
-          sha256sum *.s9pk > SHA256SUMS
-          if gh release view "$TAG" >/dev/null 2>&1; then
-            gh release upload "$TAG" *.s9pk SHA256SUMS --clobber
-          else
-            gh release create "$TAG" *.s9pk SHA256SUMS --title "$TAG" \
-              --notes "Sideload the .s9pk for your architecture in StartOS (System → Sideload)."
-          fi

@@ -14,32 +14,10 @@ This package builds Monetary View from the `upstream` git submodule
 2. Bump `version` in `startos/versions/current.ts` (upstream version + `:0`, or rename the file into a
    historical version and create a new `current.ts` if a migration is needed — see the packaging guide).
    Write `releaseNotes` in all five StartOS languages — English (`en_US`), German (`de_DE`), Spanish
-   (`es_ES`), French (`fr_FR`) and Polish (`pl_PL`): StartOS shows them in its system language, English
-   otherwise. Keep the translations in `startos/manifest/i18n.ts` and
-   `startos/i18n/dictionaries/translations.ts` in step with the English texts too, using the same wording
-   as the dashboard (upstream `bitcoinmonetaryview/static/i18n/<lang>.js`). `en_US` must stay a single
-   quoted string: the *Release* workflow takes the GitHub release notes from it.
+   (`es_ES`), French (`fr_FR`) and Polish (`pl_PL`). Keep the translations in `startos/manifest/i18n.ts`
+   and `startos/i18n/dictionaries/translations.ts` in step with the English texts too, using the same
+   wording as the dashboard (upstream `bitcoinmonetaryview/static/i18n/<lang>.js`).
 3. Copy the `FROM` line of `upstream/Dockerfile` into `Dockerfile`, so the package runs on the base image the
-   app was tested on (the *Build* workflow fails if they differ).
+   app was tested on.
 4. If upstream changed its settings schema (`docs/settings.md`), update `startos/fileModels/settings.json.ts`
    and the actions.
-
-## Publishing a release
-
-Build artifacts of the *Build* workflow expire after 14 days. To keep every version downloadable,
-publish a GitHub release for it:
-
-1. Make sure `main` carries the new version in `startos/versions/current.ts` (e.g. `0.2.3:0`).
-2. Actions → *Release* → *Run workflow* on `main`. It creates the tag **`v` + the version with `:` replaced by
-   `_`** (e.g. `v0.2.3_0` for `0.2.3:0`, Start9's
-   [tag convention](https://docs.start9.com/packaging/0.4.0.x/versions.html#git-tag-conventions)) and the GitHub
-   release, with the English release notes from `current.ts` and GitHub's list of merged pull requests.
-   Running it again with *notes only* refreshes the notes of a published release without a new build.
-   Publishing a release with that tag on GitHub by hand works too. (Releases up to `v0.2.2.0` used a `.` instead; they stay as they are.)
-3. The *Release* workflow checks that the tag matches the version, builds both architectures and attaches
-   `bitcoinmonetaryview_x86_64.s9pk`, `bitcoinmonetaryview_aarch64.s9pk`, `bitcoinmonetaryview_riscv64.s9pk` and
-   `SHA256SUMS` to the release.
-
-The *Release* workflow also attaches a signed build-provenance attestation to every `.s9pk` (GitHub's keyless
-Sigstore signing). Anyone can check that a downloaded file was built by this repository's workflow:
-`gh attestation verify bitcoinmonetaryview_x86_64.s9pk --repo MarkSierra/BitcoinMonetaryView-startos`.

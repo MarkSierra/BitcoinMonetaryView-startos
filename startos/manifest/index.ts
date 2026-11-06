@@ -5,7 +5,8 @@ export const manifest = setupManifest({
   id: 'bitcoinmonetaryview',
   title: 'Monetary View',
   license: 'AGPL-3.0-or-later',
-  packageRepo: 'https://github.com/MarkSierra/bitcoinmonetaryview-startos',
+  packageRepo:
+    'https://github.com/Start9-Community/bitcoinmonetaryview-startos',
   upstreamRepo: 'https://github.com/MarkSierra/BitcoinMonetaryView',
   marketingUrl: 'https://github.com/MarkSierra/BitcoinMonetaryView',
   donationUrl: null,

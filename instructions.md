@@ -1,14 +1,9 @@
 # Monetary View
 
-Monetary View shows how much spam your Bitcoin node stores and what a Monetary Node would save. It reads
-every block from your Bitcoin Core or Knots service and applies the rules of the
-[Monetary Node](https://github.com/sambitcoin/BitcoinMonetaryNode) project. It is strictly read-only: it never
-changes anything on your Bitcoin node.
-
 ## Documentation
 
-- [Monetary View README](https://github.com/MarkSierra/BitcoinMonetaryView#readme) — what is measured and how.
-- [Monetary Node](https://github.com/sambitcoin/BitcoinMonetaryNode) — the project the spam rules come from.
+- [Monetary View README](https://github.com/MarkSierra/BitcoinMonetaryView/blob/main/README.md) — what is measured and how.
+- [Monetary Node README](https://github.com/sambitcoin/BitcoinMonetaryNode/blob/main/README.md) — the project the spam rules come from.
 
 ## What you get on StartOS
 
@@ -18,30 +13,29 @@ changes anything on your Bitcoin node.
   dates or block heights.
 - **Any single block**: look it up by height or hash — even one the scan has not reached yet.
 - **Automatic connection** to your Bitcoin service — nothing to enter.
-- **A gentle scan**: the default *Eco* speed keeps the load on your node low.
+- **A gentle scan**: the default _Eco_ speed keeps the load on your node low.
 
 ## Getting set up
 
-1. Make sure your Bitcoin service is installed, running and fully synced.
-2. Start Monetary View. The **Scan Progress** health check shows what it is doing.
-3. Open the **Web UI** interface. After a few minutes you see the latest 1,000 blocks, and shortly after an
+1. Install Bitcoin first, and let it sync fully.
+2. Run **Set Web Password** and save the username and password it shows you.
+3. Start Monetary View. The **Scan Progress** health check shows what it is doing.
+4. Open the **Web UI** interface and sign in. After a few minutes you see the latest 1,000 blocks, and shortly after an
    **estimate for the whole chain** (marked ≈, from a sample of every 100th block). Then the full history scan
    runs and replaces the estimate with exact figures. On Start9 hardware it takes roughly 12–24 hours at
-   *Full speed* and 2–4 days at *Eco*.
+   _Full speed_ and 2–4 days at _Eco_.
 
 ## Using Monetary View
 
+- **Set Web Password** (action): generates a new password; the old one stops working.
 - **Scan Settings** (action): speed profile, and an optional daily time window (e.g. only at night).
   Takes effect within seconds.
 - **Spam Rules** (action): carrier policy on/off. Changing it deletes the results and rescans the chain.
-- **Rescan From Scratch** (action, service stopped): deletes the results and starts a fresh scan.
+- **Rescan From Scratch** (action): deletes the results; the next start begins a fresh scan.
 - **Pause / Resume** is available in the web interface.
 
 ## Limitations
 
 - On a **pruned** Bitcoin node only the blocks still stored can be analysed, and the spam UTXO figure is
   incomplete.
-- The web interface has no password of its own. It only shows public chain statistics and cannot change your
-  node (at most it asks your node to read one block on request, with a cooldown); share its address only with
-  people you trust anyway.
 - The analysis results are not backed up (they can always be rebuilt by rescanning); your settings are.
