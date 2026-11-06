@@ -27,9 +27,10 @@
 
 ## Using Monetary View
 
-- **Set Web Password** (action): generates a new password; the old one stops working.
+- **Set Web Password** (action): generates a new password. To rotate it, stop the service, run the action and
+  save the password, then start the service again.
 - **Scan Settings** (action): speed profile, and an optional daily time window (e.g. only at night).
-  Takes effect within seconds.
+  Applies without a restart.
 - **Spam Rules** (action): carrier policy on/off. Changing it deletes the results and rescans the chain.
 - **Rescan From Scratch** (action): deletes the results; the next start begins a fresh scan.
 - **Pause / Resume** is available in the web interface.

@@ -54,7 +54,7 @@ export const scanSettings = sdk.Action.withInput(
   async () => ({
     name: i18n('Scan Settings'),
     description: i18n(
-      'Choose how fast the history scan runs and, optionally, the hours it may run in. Changes take effect within seconds; no restart needed.',
+      'Choose how fast the history scan runs and, optionally, the hours it may run in. Changes apply without a restart.',
     ),
     warning: null,
     allowedStatuses: 'any',

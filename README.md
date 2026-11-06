@@ -65,7 +65,7 @@ for its RPC cookie.
 
 ## File Models
 
-One file model, the app's own settings file, which the app watches and applies live.
+One file model, the app's own settings file, which the app watches and reloads between scan steps — usually within seconds, but not during a long node call such as reading the UTXO set size.
 
 | File            | Volume | Fields                                                                                     |
 | --------------- | ------ | ------------------------------------------------------------------------------------------ |
@@ -118,11 +118,12 @@ Four user-facing actions, all of which change only Monetary View's own data.
 | Spam Rules          | `spam-rules`       | carrier policy on/off                                |
 | Rescan From Scratch | `rescan`           | delete the `/data/<network>/` result databases       |
 
-- **Set Web Password** — run once at install (its task asks for it), and again to rotate. Generates a
-  32-character password, writes it to `settings.json` and shows it once; the app applies it within seconds
-  without a restart, and the old password stops working. Confirms before replacing an existing password.
+- **Set Web Password** — available while the service is stopped. Run once at install (its task asks for it),
+  and stop the service before running it again to rotate. Generates a 32-character password, writes it to
+  `settings.json` and shows it once; the next start loads the new password. Confirms before replacing an
+  existing password.
 - **Scan Settings** — run any time to make the scan lighter or heavier on the node, or confine it to night
-  hours. Applies within seconds without a restart; safe to repeat.
+  hours. Applies without a restart, once the app next reloads its settings; safe to repeat.
 - **Spam Rules** — run only to change how payment envelopes are counted. A changed value makes the app delete
   its results and rescan the whole chain (a day or more); re-submitting the same value does nothing.
 - **Rescan From Scratch** — available while the service is stopped; run it to discard results and start over.

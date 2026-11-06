@@ -10,14 +10,14 @@ export const setWebPassword = sdk.Action.withoutInput(
   async ({ effects }) => ({
     name: i18n('Set Web Password'),
     description: i18n(
-      'Generate a new random password for the Monetary View web interface. Takes effect within seconds; no restart needed.',
+      'Generate a new random password for the Monetary View web interface. Run while the service is stopped; the next start loads it.',
     ),
     warning: (await settingsJson.read((s) => s.auth_password).const(effects))
       ? i18n(
           'This replaces the current password, and the old one stops working.',
         )
       : null,
-    allowedStatuses: 'any',
+    allowedStatuses: 'only-stopped',
     group: null,
     visibility: 'enabled',
   }),
