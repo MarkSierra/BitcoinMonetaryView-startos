@@ -47,7 +47,7 @@ const dict = {
   '${phase}: ${progress} %': 43,
   '${phase}: ${progress} % of data': 44,
   'Set Web Password': 45,
-  'Generate a new random password for the Monetary View web interface. Run while the service is stopped; the next start loads it.': 46,
+  'Generate a new random password for the Monetary View web interface. A running service restarts so that only the new password works.': 46,
   'This replaces the current password, and the old one stops working.': 47,
   'Web Interface Credentials': 48,
   'Use these to sign in to the Monetary View web interface.': 49,

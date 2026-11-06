@@ -118,10 +118,10 @@ Four user-facing actions, all of which change only Monetary View's own data.
 | Spam Rules          | `spam-rules`       | carrier policy on/off                                |
 | Rescan From Scratch | `rescan`           | delete the `/data/<network>/` result databases       |
 
-- **Set Web Password** — available while the service is stopped. Run once at install (its task asks for it),
-  and stop the service before running it again to rotate. Generates a 32-character password, writes it to
-  `settings.json` and shows it once; the next start loads the new password. Confirms before replacing an
-  existing password.
+- **Set Web Password** — available in any state. Run once at install (its task asks for it), and again to
+  rotate. Generates a 32-character password, writes it to `settings.json` and shows it once. A running
+  service is restarted, so only the new password works from then on (the app otherwise reloads
+  `settings.json` only between scan steps). Confirms before replacing an existing password.
 - **Scan Settings** — run any time to make the scan lighter or heavier on the node, or confine it to night
   hours. Applies without a restart, once the app next reloads its settings; safe to repeat.
 - **Spam Rules** — run only to change how payment envelopes are counted. A changed value makes the app delete

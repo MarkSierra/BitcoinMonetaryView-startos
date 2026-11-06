@@ -10,14 +10,17 @@ export const setWebPassword = sdk.Action.withoutInput(
   async ({ effects }) => ({
     name: i18n('Set Web Password'),
     description: i18n(
-      'Generate a new random password for the Monetary View web interface. Run while the service is stopped; the next start loads it.',
+      'Generate a new random password for the Monetary View web interface. A running service restarts so that only the new password works.',
     ),
     warning: (await settingsJson.read((s) => s.auth_password).const(effects))
       ? i18n(
           'This replaces the current password, and the old one stops working.',
         )
       : null,
-    allowedStatuses: 'only-stopped',
+    // 'any', not 'only-stopped': after an update from a running 0.3.7:0, StartOS shows the
+    // service as starting (blocked by this task) with no Stop button, so a stopped-only
+    // action could never run. A running service is restarted below instead.
+    allowedStatuses: 'any',
     group: null,
     visibility: 'enabled',
   }),
@@ -28,6 +31,12 @@ export const setWebPassword = sdk.Action.withoutInput(
       auth_user: webUser,
       auth_password: password,
     })
+
+    // The app reads settings.json only from its scanner loop, which a long node call can hold
+    // for minutes; a restart makes the new password the only valid one straight away.
+    if ((await effects.getStatus({}))?.started) {
+      await effects.restart()
+    }
 
     return {
       version: '1',
