@@ -85,7 +85,7 @@ One required dependency, used read-only. No bitcoind configuration is changed.
 | ---------- | ------- | --------------------------- | ------------------------------------ | ----------------------------------------- |
 | `bitcoind` | running | `bitcoind`, `sync-progress` | `main` → `/mnt/bitcoind` (read-only) | blocks via read-only RPC/REST; RPC cookie |
 
-Bitcoin Core and the Knots flavor are both accepted. The package connects over the LXC bridge to bitcoind's
+Bitcoin Core and the Knots (pre-RDTS) and Roots flavors are accepted. The package connects over the LXC bridge to bitcoind's
 `rpc-local` host (RPC and REST, binary block downloads) when it is published, otherwise to the `rpc` proxy
 (JSON-RPC only; the app then uses RPC and falls back from batch requests). Pruned nodes work with reduced
 coverage.
