@@ -10,7 +10,7 @@
 > Documentation section of `instructions.md` for links.
 
 [Monetary View](https://github.com/MarkSierra/BitcoinMonetaryView) analyses every block of a Bitcoin
-Core, Knots or Roots node with the [Monetary Node](https://github.com/sambitcoin/BitcoinMonetaryNode) rules and shows
+Core/Knots node with the [Monetary Node](https://github.com/sambitcoin/BitcoinMonetaryNode) rules and shows
 how much spam the node stores, what a Monetary Node would save, and the spam in the current UTXO set.
 It is an independent project, not affiliated with or endorsed by the Monetary Node project; it uses its
 published spam rules unchanged. It is strictly read-only towards the node.
