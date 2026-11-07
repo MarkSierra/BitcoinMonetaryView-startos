@@ -1,7 +1,7 @@
 import { IMPOSSIBLE, VersionInfo } from '@start9labs/start-sdk'
 
 export const current = VersionInfo.of({
-  version: '0.3.9:0',
+  version: '0.3.9:0-beta.0',
   releaseNotes: {
     en_US: `Updated Monetary View to 0.3.9.
 
