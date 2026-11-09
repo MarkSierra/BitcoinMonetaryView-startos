@@ -1,46 +1,19 @@
 import { IMPOSSIBLE, VersionInfo } from '@start9labs/start-sdk'
+import { networkDirs, noCow } from '../utils'
 
 export const current = VersionInfo.of({
-  version: '0.3.10:0',
+  version: '0.3.10:1',
   releaseNotes: {
-    en_US: `Updated Monetary View to 0.3.10.
-
-- Fix: the latest-block cards no longer cut off the spam and block size
-- Fix: Trends and records always shows its four tiles; one that is not ready yet says when it will be
-- Internal: the dashboard's database connections are pooled and closed cleanly
-
-[Full release notes](https://github.com/MarkSierra/BitcoinMonetaryView/releases/tag/v0.3.10)`,
-    de_DE: `Monetary View auf 0.3.10 aktualisiert.
-
-- Behoben: die Karten der neuesten Blöcke schneiden Spam und Blockgröße nicht mehr ab
-- Behoben: Trends und Rekorde zeigt immer seine vier Kacheln; eine noch nicht fertige sagt, wann sie es sein wird
-- Intern: die Datenbankverbindungen des Dashboards werden gebündelt und sauber geschlossen
-
-[Vollständige Versionshinweise](https://github.com/MarkSierra/BitcoinMonetaryView/releases/tag/v0.3.10)`,
-    es_ES: `Monetary View actualizado a 0.3.10.
-
-- Corrección: las tarjetas de los últimos bloques ya no cortan el spam ni el tamaño del bloque
-- Corrección: Tendencias y récords muestra siempre sus cuatro casillas; una que aún no está lista indica cuándo lo estará
-- Interno: las conexiones a la base de datos del panel se reutilizan y se cierran correctamente
-
-[Notas completas de la versión](https://github.com/MarkSierra/BitcoinMonetaryView/releases/tag/v0.3.10)`,
-    fr_FR: `Monetary View mis à jour en 0.3.10.
-
-- Correction : les cartes des derniers blocs ne coupent plus le spam ni la taille du bloc
-- Correction : Tendances et records affiche toujours ses quatre tuiles ; une tuile pas encore prête indique quand elle le sera
-- Interne : les connexions à la base de données du tableau de bord sont mutualisées et fermées proprement
-
-[Notes de version complètes](https://github.com/MarkSierra/BitcoinMonetaryView/releases/tag/v0.3.10)`,
-    pl_PL: `Zaktualizowano Monetary View do 0.3.10.
-
-- Poprawka: karty najnowszych bloków nie obcinają już spamu ani rozmiaru bloku
-- Poprawka: Trendy i rekordy zawsze pokazują cztery kafelki; kafelek, który nie jest jeszcze gotowy, informuje, kiedy będzie
-- Wewnętrzne: połączenia dashboardu z bazą danych są współdzielone i poprawnie zamykane
-
-[Pełne informacje o wydaniu](https://github.com/MarkSierra/BitcoinMonetaryView/releases/tag/v0.3.10)`,
+    en_US: `Scan results are stored without copy-on-write. The update rewrites existing scan results once, which can take several minutes for a large scan.`,
+    de_DE: `Scan-Ergebnisse werden ohne Copy-on-Write gespeichert. Das Update schreibt vorhandene Scan-Ergebnisse einmalig neu, was bei einem großen Scan mehrere Minuten dauern kann.`,
+    es_ES: `Los resultados del escaneo se guardan sin copia en escritura (copy-on-write). La actualización reescribe una vez los resultados existentes, lo que puede tardar varios minutos si el escaneo es grande.`,
+    fr_FR: `Les résultats d'analyse sont stockés sans copie sur écriture (copy-on-write). La mise à jour réécrit une fois les résultats existants, ce qui peut prendre plusieurs minutes pour une analyse volumineuse.`,
+    pl_PL: `Wyniki skanowania są zapisywane bez kopiowania przy zapisie (copy-on-write). Aktualizacja jednorazowo przepisuje istniejące wyniki, co przy dużym skanie może potrwać kilka minut.`,
   },
   migrations: {
-    up: async ({ effects }) => {},
+    up: async ({ effects }) => {
+      await noCow(effects, networkDirs)
+    },
     down: IMPOSSIBLE,
   },
 })
