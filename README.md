@@ -63,6 +63,10 @@ for its RPC cookie.
 | `main`                      | `/data`         | `settings.json`, per-network result databases (`/data/<net>/`) |
 | bitcoind `main` (read-only) | `/mnt/bitcoind` | only `.cookie` is read (RPC credentials)                       |
 
+`/data` carries the btrfs nodatacow attribute (`chattr +C`), kept by `nocow.py` in the image, so the result databases the app creates inherit it. Their constant small
+writes would otherwise fragment them on the copy-on-write data drive. The databases have no btrfs
+checksums as a result; they are rebuildable from the node.
+
 ## File Models
 
 One file model, the app's own settings file, which the app watches and reloads between scan steps — usually within seconds, but not during a long node call such as reading the UTXO set size.

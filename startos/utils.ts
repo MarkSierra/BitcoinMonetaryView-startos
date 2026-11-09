@@ -23,6 +23,28 @@ export const networkDirs = [
   'regtest',
 ]
 
+/**
+ * Marks `dataDir` nodatacow so the result databases the app creates inherit it, and rewrites
+ * the given network directories' existing copy-on-write files (see nocow.py in the image).
+ */
+export const noCow = (effects: T.Effects, nets: string[] = []) =>
+  sdk.SubContainer.withTemp(
+    effects,
+    { imageId: 'bitcoinmonetaryview' },
+    sdk.Mounts.of().mountVolume({
+      volumeId: 'main',
+      subpath: null,
+      mountpoint: dataDir,
+      readonly: false,
+    }),
+    'nocow',
+    (sub) =>
+      sub.execFail(['python3', '/usr/local/lib/nocow.py', dataDir, ...nets], {
+        user: 'root',
+        timeout: null,
+      }),
+  )
+
 // bitcoind (Bitcoin Core / Knots / Roots package, id 'bitcoind') host ids and ports, as published by
 // bitcoin-core-startos (startos/utils.ts). Literals so this package does not depend on it at
 // the npm level.
