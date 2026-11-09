@@ -1,7 +1,7 @@
 """Keep the result databases nodatacow on btrfs; rewrite any copy-on-write files once.
 
 Usage: nocow.py <data-dir> <network-dir>...
-Never fails the start: on any error it says so and exits 0.
+Conversion errors are non-fatal while the live data directory remains intact.
 """
 import fcntl
 import os
@@ -56,6 +56,14 @@ def copy(src, dst):
     shutil.copymode(src, dst)
 
 
+def restore_original(old, path):
+    """Block startup if the original database directory cannot be restored."""
+    try:
+        os.rename(old, path)
+    except OSError as e:
+        raise RuntimeError(f"nocow: cannot restore {old} to {path}; refusing to start") from e
+
+
 def rewrite(data, net):
     path = os.path.join(data, net)
     tmp = os.path.join(data, f".{net}.nocow")
@@ -64,7 +72,7 @@ def rewrite(data, net):
         if os.path.isdir(path):
             shutil.rmtree(old)
         else:
-            os.rename(old, path)
+            restore_original(old, path)
     if os.path.isdir(tmp):
         shutil.rmtree(tmp)
     if not os.path.isdir(path) or all(is_nocow(p) for p in tree(path)):
@@ -78,15 +86,24 @@ def rewrite(data, net):
 
     print(f"nocow: rewriting {path} ({size >> 20} MiB) without copy-on-write")
     os.mkdir(tmp, 0o700)
-    set_nocow(tmp)
-    for d, dirs, files in os.walk(path):
-        target = os.path.join(tmp, os.path.relpath(d, path))
-        for sub in dirs:
-            os.makedirs(os.path.join(target, sub), exist_ok=True)
-        for f in files:
-            copy(os.path.join(d, f), os.path.join(target, f))
-    os.rename(path, old)
-    os.rename(tmp, path)
+    try:
+        set_nocow(tmp)
+        for d, dirs, files in os.walk(path):
+            target = os.path.join(tmp, os.path.relpath(d, path))
+            for sub in dirs:
+                os.makedirs(os.path.join(target, sub), exist_ok=True)
+            for f in files:
+                copy(os.path.join(d, f), os.path.join(target, f))
+        os.rename(path, old)
+        try:
+            os.rename(tmp, path)
+        except OSError:
+            restore_original(old, path)
+            raise
+    except OSError:
+        if os.path.isdir(tmp):
+            shutil.rmtree(tmp)
+        raise
     shutil.rmtree(old)
     print(f"nocow: {path} done")
 
