@@ -19,7 +19,6 @@ export const current = VersionInfo.of({
 
 **Fixes**
 
-- A settings file that cannot be read is kept as settings.json.damaged, the service starts with default settings, and the Set Web Password task asks for a new password
 - After an interrupted first pass, the latest blocks are scanned without gaps
 
 Release notes of [0.3.13](https://github.com/MarkSierra/BitcoinMonetaryView/releases/tag/v0.3.13) and [0.3.14](https://github.com/MarkSierra/BitcoinMonetaryView/releases/tag/v0.3.14)`,
@@ -39,7 +38,6 @@ Release notes of [0.3.13](https://github.com/MarkSierra/BitcoinMonetaryView/rele
 
 **Behoben**
 
-- Eine Einstellungsdatei, die nicht gelesen werden kann, wird als settings.json.damaged aufbewahrt, der Dienst startet mit Standardeinstellungen, und die Aufgabe „Set Web Password“ fragt nach einem neuen Passwort
 - Nach einem unterbrochenen ersten Durchlauf werden die neuesten Blöcke lückenlos gescannt
 
 Versionshinweise zu [0.3.13](https://github.com/MarkSierra/BitcoinMonetaryView/releases/tag/v0.3.13) und [0.3.14](https://github.com/MarkSierra/BitcoinMonetaryView/releases/tag/v0.3.14)`,
@@ -59,7 +57,6 @@ Versionshinweise zu [0.3.13](https://github.com/MarkSierra/BitcoinMonetaryView/r
 
 **Correcciones**
 
-- Un archivo de ajustes que no se puede leer se guarda como settings.json.damaged, el servicio arranca con los ajustes predeterminados y la tarea Set Web Password pide una contraseña nueva
 - Tras una primera pasada interrumpida, los bloques más recientes se escanean sin huecos
 
 Notas de la versión [0.3.13](https://github.com/MarkSierra/BitcoinMonetaryView/releases/tag/v0.3.13) y [0.3.14](https://github.com/MarkSierra/BitcoinMonetaryView/releases/tag/v0.3.14)`,
@@ -79,7 +76,6 @@ Notas de la versión [0.3.13](https://github.com/MarkSierra/BitcoinMonetaryView/
 
 **Corrections**
 
-- Un fichier de paramètres illisible est conservé sous le nom settings.json.damaged, le service démarre avec les paramètres par défaut et la tâche Set Web Password demande un nouveau mot de passe
 - Après une première passe interrompue, les blocs les plus récents sont analysés sans trou
 
 Notes de version de [0.3.13](https://github.com/MarkSierra/BitcoinMonetaryView/releases/tag/v0.3.13) et [0.3.14](https://github.com/MarkSierra/BitcoinMonetaryView/releases/tag/v0.3.14)`,
@@ -99,7 +95,6 @@ Notes de version de [0.3.13](https://github.com/MarkSierra/BitcoinMonetaryView/r
 
 **Poprawki**
 
-- Plik ustawień, którego nie da się odczytać, zostaje zachowany jako settings.json.damaged, usługa startuje z ustawieniami domyślnymi, a zadanie Set Web Password prosi o nowe hasło
 - Po przerwanym pierwszym przebiegu najnowsze bloki są skanowane bez luk
 
 Informacje o wydaniu [0.3.13](https://github.com/MarkSierra/BitcoinMonetaryView/releases/tag/v0.3.13) i [0.3.14](https://github.com/MarkSierra/BitcoinMonetaryView/releases/tag/v0.3.14)`,

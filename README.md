@@ -75,9 +75,7 @@ One file model, the app's own settings file, which the app watches and reloads b
 | --------------- | ------ | ------------------------------------------------------------------------------------------ |
 | `settings.json` | `main` | `speed_profile`, `scan_window`, `timezone`, `carrier_policy`, `auth_user`, `auth_password` |
 
-Seeded with defaults on every init, which fills missing fields and leaves the rest. A file that is not a JSON
-object is first moved to `settings.json.damaged`, so init writes defaults and the critical **Set Web Password**
-task returns. **Scan Settings**,
+Seeded with defaults on every init, which fills missing fields and leaves the rest. **Scan Settings**,
 **Spam Rules** and **Set Web Password** rewrite only their own fields; any other key a hand edit adds survives. Connection, bind
 address, port and REST use are not in this file: they are pinned as environment variables (see the quick
 reference), which take precedence over the file in the app. The app runs in managed mode
@@ -155,8 +153,7 @@ Two checks while bitcoind publishes its RPC interface; one placeholder while it 
 
 **Scan Progress** stays in the loading state, with the phase and its percentage, until the scan is live, then
 turns green. It fails only when the app reports an error, with the app's own message — usually that bitcoind
-refused the cookie or is unreachable; the service logs say which. If `settings.json` is damaged, the app locks
-its web interface until the file is repaired, and the check fails with that message. **Bitcoin connection** means bitcoind is
+refused the cookie or is unreachable; the service logs say which. **Bitcoin connection** means bitcoind is
 installed but has not published its RPC interface yet; the package restarts itself once it does.
 
 ## Backups and Restore

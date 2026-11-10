@@ -13,10 +13,7 @@ import {
 /** Reads /api/status inside the container (http.client: no proxy) and prints phase + progress as JSON. */
 const STATUS_SCRIPT = [
   'import base64, http.client, json',
-  'try:',
-  `    s, bad = json.load(open("${dataDir}/settings.json")), False`,
-  'except (OSError, ValueError):',
-  '    s, bad = {}, True',
+  `s = json.load(open("${dataDir}/settings.json"))`,
   'h = {}',
   'if s.get("auth_user"):',
   '    a = base64.b64encode(f\'{s["auth_user"]}:{s.get("auth_password", "")}\'.encode())',
@@ -25,11 +22,6 @@ const STATUS_SCRIPT = [
   'c.request("GET", "/api/status", headers=h)',
   'r = c.getresponse()',
   'b = r.read()',
-  '# 503: the app has locked its web interface (damaged settings.json) and says why',
-  'if r.status == 503 or (bad and r.status == 401):',
-  '    e = b.decode("utf-8", "replace") if r.status == 503 else "settings.json is damaged; repair it"',
-  '    print(json.dumps({"phase": "error", "detail": e}))',
-  '    raise SystemExit',
   'd = json.loads(b)',
   'print(json.dumps({"phase": d.get("phase"), "label": d.get("phase_label"),',
   '                  "progress": d.get("progress"), "detail": d.get("detail"),',
