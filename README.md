@@ -75,7 +75,9 @@ One file model, the app's own settings file, which the app watches and reloads b
 | --------------- | ------ | ------------------------------------------------------------------------------------------ |
 | `settings.json` | `main` | `speed_profile`, `scan_window`, `timezone`, `carrier_policy`, `auth_user`, `auth_password` |
 
-Seeded with defaults on every init, which fills missing fields and leaves the rest. **Scan Settings**,
+Seeded with defaults on every init, which fills missing fields and leaves the rest. A file that is not a JSON
+object is first moved to `settings.json.damaged`, so init writes defaults and the critical **Set Web Password**
+task returns. **Scan Settings**,
 **Spam Rules** and **Set Web Password** rewrite only their own fields; any other key a hand edit adds survives. Connection, bind
 address, port and REST use are not in this file: they are pinned as environment variables (see the quick
 reference), which take precedence over the file in the app. The app runs in managed mode
