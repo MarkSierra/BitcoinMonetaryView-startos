@@ -159,7 +159,8 @@ installed but has not published its RPC interface yet; the package restarts itse
 ## Backups and Restore
 
 Backups copy `main` except the per-network result databases (`/mainnet`, `/testnet3`, `/testnet4`, `/signet`,
-`/regtest`): they are several GB and can always be rebuilt from the node. Only `settings.json` is backed up,
+`/regtest`, and the staging copies `/.<net>.nocow` and `/.<net>.old` that `nocow.py` uses while converting them):
+they are several GB and can always be rebuilt from the node. Only `settings.json` is backed up,
 so after a restore the app scans from scratch.
 
 ## Limitations and Differences
@@ -167,6 +168,8 @@ so after a restore the app scans from scratch.
 1. One shared login (`admin`) for everyone using the web interface; the app has no user accounts.
 2. Requires the bitcoind service on the same server; remote nodes are not supported in the package.
 3. Settings are changed through the StartOS actions only; the web UI shows them read-only.
+4. Once a week the app calls `gettxoutsetinfo` (hash type `none`) for the size of bitcoind's UTXO set;
+   bitcoind flushes its UTXO cache to disk to answer. It is the only call that makes bitcoind write.
 
 ---
 

@@ -10,16 +10,19 @@ import {
   uiPort,
 } from './utils'
 
-/** Reads /api/status inside the container and prints phase + progress as JSON. */
+/** Reads /api/status inside the container (http.client: no proxy) and prints phase + progress as JSON. */
 const STATUS_SCRIPT = [
-  'import base64, json, urllib.request',
+  'import base64, http.client, json',
   `s = json.load(open("${dataDir}/settings.json"))`,
-  `q = urllib.request.Request("http://127.0.0.1:${uiPort}/api/status")`,
+  'h = {}',
   'if s.get("auth_user"):',
   '    a = base64.b64encode(f\'{s["auth_user"]}:{s.get("auth_password", "")}\'.encode())',
-  '    q.add_header("Authorization", "Basic " + a.decode())',
-  'r = urllib.request.urlopen(q, timeout=5)',
-  'd = json.load(r)',
+  '    h["Authorization"] = "Basic " + a.decode()',
+  `c = http.client.HTTPConnection("127.0.0.1", ${uiPort}, timeout=5)`,
+  'c.request("GET", "/api/status", headers=h)',
+  'r = c.getresponse()',
+  'b = r.read()',
+  'd = json.loads(b)',
   'print(json.dumps({"phase": d.get("phase"), "label": d.get("phase_label"),',
   '                  "progress": d.get("progress"), "detail": d.get("detail"),',
   '                  "by_data": bool(d.get("total_bytes_estimate"))}))',

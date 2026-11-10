@@ -40,3 +40,6 @@
 - On a **pruned** Bitcoin node only the blocks still stored can be analysed, and the spam UTXO figure is
   incomplete.
 - The analysis results are not backed up (they can always be rebuilt by rescanning); your settings are.
+- Once a week Monetary View asks Bitcoin for the size of its UTXO set (for the share of spam in it). To
+  answer, Bitcoin writes the part of the UTXO set it holds in memory to disk and reads the whole set, which
+  takes a few minutes of its disk and CPU. Nothing in Bitcoin's data changes.
