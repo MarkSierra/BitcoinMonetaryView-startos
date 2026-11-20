@@ -29,6 +29,7 @@ const dict = {
   'Starting Monetary View': 25,
   'Bitcoin connection': 26,
   'Waiting for Bitcoin to publish its RPC interface': 27,
+  'Update Bitcoin so Monetary View can connect to it': 53,
   'Web Interface': 28,
   'The web interface is ready': 29,
   'The web interface is not ready': 30,

@@ -144,18 +144,20 @@ One task, raised by init whenever `auth_password` is empty.
 
 ## Health Checks
 
-Two checks while bitcoind publishes its RPC interface; one placeholder while it does not.
+Two checks while bitcoind publishes its RPC interface; one placeholder while it does not, or while it is too old to publish its `public` volume.
 
 | Check           | Displayed          | Method                                                                       |
 | --------------- | ------------------ | ---------------------------------------------------------------------------- |
 | `primary`       | Web Interface      | port 8338 listening                                                          |
 | `scan-progress` | Scan Progress      | `GET /api/status` every 30 s, with the stored credential: phase and progress |
-| `bitcoind-rpc`  | Bitcoin connection | shown only while bitcoind has no RPC binding                                 |
+| `bitcoind-rpc`  | Bitcoin connection | shown only while bitcoind has no RPC binding or predates its `public` volume |
 
 **Scan Progress** stays in the loading state, with the phase and its percentage, until the scan is live, then
 turns green. It fails only when the app reports an error, with the app's own message — usually that bitcoind
 refused the cookie or is unreachable; the service logs say which. **Bitcoin connection** means bitcoind is
-installed but has not published its RPC interface yet; the package restarts itself once it does.
+installed but has not published its RPC interface yet; the package restarts itself once it does. If it
+fails instead, asking for Bitcoin to be updated, the installed Bitcoin is too old to publish its `public`
+volume: nothing is mounted from it, and the package restarts itself once Bitcoin is updated.
 
 ## Backups and Restore
 

@@ -48,16 +48,32 @@ export const main = sdk.setupMain(async ({ effects }) => {
 
   // Null while bitcoind publishes no RPC binding; .const() restarts main when it appears.
   const rpc = await bitcoindRpcAddress(effects)
-  if (!rpc) {
+  // An older Bitcoin lacks the public volume, and mounting a missing volume fails the start.
+  const hasRpcVolume = await sdk
+    .getServiceManifest(effects, 'bitcoind', (m) =>
+      m?.volumes.includes(btcVolumeId),
+    )
+    .const()
+  if (!rpc || hasRpcVolume === false) {
     return sdk.Daemons.of(effects).addHealthCheck('bitcoind-rpc', {
       ready: {
         display: i18n('Bitcoin connection'),
         gracePeriod: 0,
         trigger: sdk.trigger.cooldownTrigger(60_000),
-        fn: async () => ({
-          result: 'loading',
-          message: i18n('Waiting for Bitcoin to publish its RPC interface'),
-        }),
+        fn: async () =>
+          hasRpcVolume === false
+            ? {
+                result: 'failure',
+                message: i18n(
+                  'Update Bitcoin so Monetary View can connect to it',
+                ),
+              }
+            : {
+                result: 'loading',
+                message: i18n(
+                  'Waiting for Bitcoin to publish its RPC interface',
+                ),
+              },
       },
       requires: [],
     })

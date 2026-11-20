@@ -25,6 +25,9 @@
    runs and replaces the estimate with exact figures. On Start9 hardware it takes roughly 12–24 hours at
    _Full speed_ and 2–4 days at _Eco_.
 
+If the **Bitcoin connection** health check asks you to update Bitcoin, install Bitcoin's update; Monetary View
+starts on its own once it is done.
+
 ## Using Monetary View
 
 - **Set Web Password** (action): generates a new password and shows it once; save it. If the service is
