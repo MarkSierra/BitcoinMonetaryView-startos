@@ -59,7 +59,7 @@ export const main = sdk.setupMain(async ({ effects }) => {
       ready: {
         display: i18n('Bitcoin connection'),
         gracePeriod: 0,
-        trigger: sdk.trigger.cooldownTrigger(60_000),
+        trigger: sdk.trigger.onceTrigger,
         fn: async () =>
           hasRpcVolume === false
             ? {

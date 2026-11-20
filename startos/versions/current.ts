@@ -1,23 +1,18 @@
 import { VersionInfo } from '@start9labs/start-sdk'
 
 export const current = VersionInfo.of({
-  version: '0.3.14:1',
+  version: '0.3.14:2',
   releaseNotes: {
-    en_US: `Requires StartOS 0.4.2 or later.
-
-Monetary View's access to Bitcoin's data is limited to its RPC credentials. Update Bitcoin when StartOS asks. Until you do, Monetary View waits and tells you to update Bitcoin instead of failing to start.`,
-    de_DE: `Erfordert StartOS 0.4.2 oder neuer.
-
-Der Zugriff von Monetary View auf die Daten von Bitcoin ist auf dessen RPC-Zugangsdaten beschränkt. Aktualisiere Bitcoin, sobald StartOS dazu auffordert. Bis dahin wartet Monetary View und fordert dich auf, Bitcoin zu aktualisieren, statt fehlerhaft zu starten.`,
-    es_ES: `Requiere StartOS 0.4.2 o posterior.
-
-El acceso de Monetary View a los datos de Bitcoin se limita a sus credenciales RPC. Actualiza Bitcoin cuando StartOS lo pida. Hasta entonces, Monetary View espera y te indica que actualices Bitcoin en lugar de fallar al iniciarse.`,
-    fr_FR: `Nécessite StartOS 0.4.2 ou une version ultérieure.
-
-L’accès de Monetary View aux données de Bitcoin se limite à ses identifiants RPC. Mettez Bitcoin à jour lorsque StartOS le demande. D’ici là, Monetary View attend et vous invite à mettre Bitcoin à jour au lieu d’échouer au démarrage.`,
-    pl_PL: `Wymaga StartOS 0.4.2 lub nowszego.
-
-Dostęp Monetary View do danych Bitcoina ogranicza się do jego danych uwierzytelniających RPC. Zaktualizuj Bitcoina, gdy StartOS o to poprosi. Do tego czasu Monetary View czeka i prosi o aktualizację Bitcoina, zamiast kończyć uruchamianie błędem.`,
+    en_US:
+      'While waiting for you to update Bitcoin, Monetary View writes that to its logs once instead of repeating it every minute.',
+    de_DE:
+      'Während Monetary View darauf wartet, dass du Bitcoin aktualisierst, vermerkt es das einmal in seinen Protokollen, statt es jede Minute zu wiederholen.',
+    es_ES:
+      'Mientras espera a que actualices Bitcoin, Monetary View lo indica una sola vez en sus registros en lugar de repetirlo cada minuto.',
+    fr_FR:
+      "En attendant que vous mettiez Bitcoin à jour, Monetary View l'indique une seule fois dans ses journaux au lieu de le répéter chaque minute.",
+    pl_PL:
+      'Czekając na aktualizację Bitcoina, Monetary View zapisuje to w logach raz, zamiast powtarzać co minutę.',
   },
   migrations: {
     up: async () => {},
