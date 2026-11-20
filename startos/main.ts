@@ -5,6 +5,7 @@ import { sdk } from './sdk'
 import {
   bitcoindRpcAddress,
   btcMountpoint,
+  btcVolumeId,
   cookiePath,
   dataDir,
   uiPort,
@@ -73,10 +74,10 @@ export const main = sdk.setupMain(async ({ effects }) => {
         readonly: false,
       })
       // Read-only directory mount: bitcoind replaces .cookie on every restart, and the app
-      // re-reads it on HTTP 401. Nothing else in this volume is ever opened.
+      // re-reads it on HTTP 401.
       .mountDependency<T.SDKManifest>({
         dependencyId: 'bitcoind',
-        volumeId: 'main',
+        volumeId: btcVolumeId,
         subpath: null,
         mountpoint: btcMountpoint,
         readonly: true,
@@ -96,8 +97,7 @@ export const main = sdk.setupMain(async ({ effects }) => {
           dataDir,
         ],
         // root inside the isolated subcontainer, like the official Mempool and Electrs
-        // packages: bitcoind's RPC cookie is readable by root only. The app still opens
-        // nothing in bitcoind's volume but the cookie, and that mount is read-only.
+        // packages: bitcoind's RPC cookie is readable by root only.
         user: 'root',
         env: {
           PYTHONPATH: '/app',

@@ -55,13 +55,14 @@ The image is built from the `upstream/` submodule on the same Python slim base i
 
 ## Volume and Data Layout
 
-The package's own volume holds the settings and the result databases; bitcoind's volume is mounted read-only
-for its RPC cookie.
+The package's own volume holds the settings and the result databases; bitcoind's `public` volume, which
+holds the RPC cookie bitcoind publishes for dependents and none of its chain or wallet data, is mounted
+read-only.
 
-| Volume                      | Mount point     | Contents                                                       |
-| --------------------------- | --------------- | -------------------------------------------------------------- |
-| `main`                      | `/data`         | `settings.json`, per-network result databases (`/data/<net>/`) |
-| bitcoind `main` (read-only) | `/mnt/bitcoind` | only `.cookie` is read (RPC credentials)                       |
+| Volume                        | Mount point     | Contents                                                       |
+| ----------------------------- | --------------- | -------------------------------------------------------------- |
+| `main`                        | `/data`         | `settings.json`, per-network result databases (`/data/<net>/`) |
+| bitcoind `public` (read-only) | `/mnt/bitcoind` | only `.cookie` is read (RPC credentials)                       |
 
 `/data` carries the btrfs nodatacow attribute (`chattr +C`), kept by `nocow.py` in the image, so the result databases the app creates inherit it. Their constant small
 writes would otherwise fragment them on the copy-on-write data drive. The databases have no btrfs
@@ -85,9 +86,9 @@ reference), which take precedence over the file in the app. The app runs in mana
 
 One required dependency, used read-only. No bitcoind configuration is changed.
 
-| Dependency | Kind    | Health checks               | Mount                                | Purpose                                   |
-| ---------- | ------- | --------------------------- | ------------------------------------ | ----------------------------------------- |
-| `bitcoind` | running | `bitcoind`, `sync-progress` | `main` → `/mnt/bitcoind` (read-only) | blocks via read-only RPC/REST; RPC cookie |
+| Dependency | Kind    | Health checks               | Mount                                  | Purpose                                   |
+| ---------- | ------- | --------------------------- | -------------------------------------- | ----------------------------------------- |
+| `bitcoind` | running | `bitcoind`, `sync-progress` | `public` → `/mnt/bitcoind` (read-only) | blocks via read-only RPC/REST; RPC cookie |
 
 Bitcoin Core and the Knots (pre-RDTS) and Roots flavors are accepted. The package connects over the LXC bridge to bitcoind's
 `rpc-local` host (RPC and REST, binary block downloads) when it is published, otherwise to the `rpc` proxy
@@ -182,7 +183,7 @@ subcontainers: [bitcoinmonetaryview]
 volumes:
   main: /data
 dependency_mounts:
-  bitcoind/main: /mnt/bitcoind # read-only, only .cookie is read
+  bitcoind/public: /mnt/bitcoind # read-only, only .cookie is read
 file_models:
   - main/settings.json
 interfaces:

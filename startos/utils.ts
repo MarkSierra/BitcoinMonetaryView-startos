@@ -10,7 +10,8 @@ export const webUser = 'admin'
 
 /** Where the app keeps its own data (settings.json, per-network databases). */
 export const dataDir = '/data'
-/** bitcoind's main volume, mounted read-only — only the RPC cookie is read from it. */
+/** bitcoind's volume holding the RPC cookie it publishes for dependents, mounted read-only. */
+export const btcVolumeId = 'public'
 export const btcMountpoint = '/mnt/bitcoind'
 export const cookiePath = `${btcMountpoint}/.cookie`
 

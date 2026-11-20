@@ -10,7 +10,7 @@ const bitcoind = sdk.Dependency.required('bitcoind', {
   },
   // Core, the pre-RDTS Knots flavor and the Roots flavor.
   versionRange:
-    '(>=28.4:17 && <29) || (>=29.4:4 && <30) || (>=30.3:4 && <31) || >=31.1:4 || >=#knotsprerdts:29.3:29 || >=#roots:29.4:0',
+    '(>=28.4:42 && <29) || (>=29.5:4 && <30) || (>=30.4:4 && <31) || >=31.2:4 || >=#knotsprerdts:29.3:33 || >=#roots:29.4:1',
   kind: 'running',
   healthChecks: ['bitcoind', 'sync-progress'],
 })
